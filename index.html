@@ -1,66 +1,84 @@
 <!doctype html>
 <html lang="tr">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Pınar Yıldız | Çayyolu Ankara</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
 
-  <!-- Görsel/kart görünüşünü garantiye alan ufak ek stiller -->
+  <!-- Sayfa düzeltmeleri / portföy kart düzeni -->
   <style>
-    :root { --brand:#0da37f; --muted:#6b7280; }
-    .topbar{display:flex;justify-content:space-between;gap:12px;padding:8px 16px;background:#0b1220;color:#cbd5e1;font:500 12px/1 Inter;}
-    .topbar .dt{opacity:.9}
-    .nav{display:flex;justify-content:space-between;align-items:center;padding:14px 18px}
-    .nav .brand{display:flex;gap:10px;align-items:center}
-    .nav .brand .dot{width:36px;height:36px;border-radius:50%;display:grid;place-items:center;background:var(--brand);color:#fff;font-weight:800}
-    .nav nav a{margin-left:14px}
+    :root{
+      --bg:#0b1220; --card:#0f172a; --muted:#9aa3b2; --txt:#e9eef7; --acc:#15b888; --danger:#f43f5e;
+      --ring:0 0 0 .5px rgba(255,255,255,.2), 0 10px 30px rgba(0,0,0,.45);
+    }
+    body{background:#070d1a;color:var(--txt);font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,Noto Sans,"Apple Color Emoji","Segoe UI Emoji";}
     .muted{color:var(--muted)}
-    .section{padding:40px 20px;max-width:1180px;margin:auto}
+    .topbar{display:flex;justify-content:space-between;gap:16px;align-items:center;padding:8px 18px;background:#091126;border-bottom:1px solid rgba(255,255,255,.06);position:sticky;top:0;z-index:40}
+    .topbar .dt{font-weight:600;letter-spacing:.2px}
+    .nav{display:flex;justify-content:space-between;align-items:center;padding:18px 22px}
+    .brand{display:flex;align-items:center;gap:12px}
+    .brand .dot{background:linear-gradient(135deg,#2dd4bf,#22c55e);color:#031018;font-weight:800;width:36px;height:36px;border-radius:9px;display:grid;place-items:center}
+    .brand .txt{display:flex;flex-direction:column;line-height:1.1}
+    .brand .txt span{font-size:.875rem;color:var(--muted)}
+    .nav nav a{color:var(--txt);text-decoration:none;margin:0 10px}
+    .nav nav .btn{background:linear-gradient(135deg,#2dd4bf,#22c55e);color:#031018;border-radius:10px;padding:8px 14px;font-weight:700}
 
-    /* --- Portföy kartları --- */
-    .grid.three{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:22px}
-    @media (max-width:1024px){.grid.three{grid-template-columns:repeat(2,minmax(0,1fr))}}
-    @media (max-width:640px){.grid.three{grid-template-columns:1fr}}
-    .card{border-radius:14px;background:#fff;box-shadow:0 4px 20px rgba(0,0,0,.05);overflow:hidden;display:flex;flex-direction:column;text-decoration:none;color:inherit;transition:transform .15s ease, box-shadow .15s ease}
-    .card:hover{transform:translateY(-2px);box-shadow:0 10px 26px rgba(0,0,0,.10)}
-    .img-wrap{position:relative;aspect-ratio:16/9;background:#0f172a;overflow:hidden}
-    .img-wrap img{width:100%;height:100%;object-fit:cover;display:block}
-    .img-wrap::after{content:"";position:absolute;inset:auto 0 0 0;height:86px;background:linear-gradient(180deg,transparent,rgba(0,0,0,.55));pointer-events:none}
-    .pb{padding:14px 16px}
-    .pb h3{margin:0 0 4px 0}
-    .price{color:#ef4444;font-weight:800}
-    .meta{font-size:13px;color:#64748b;margin:4px 0 10px}
-    .small{font-size:12px}
-    .filters{display:flex;gap:10px;flex-wrap:wrap;margin:12px 0 18px}
-    .filters input,.filters select{padding:10px 12px;border:1px solid #e5e7eb;border-radius:10px;min-width:150px}
-    .filters select{cursor:pointer}
+    .section{padding:40px 18px;max-width:1200px;margin:0 auto}
+    #portfoy h2{font-size:1.75rem;margin-bottom:14px}
 
-    /* WhatsApp yüzen buton */
-    .wa-fab{position:fixed;right:18px;bottom:18px;background:#25D366;color:#fff;border-radius:999px;padding:12px 16px;
-      display:flex;align-items:center;gap:8px;font:600 14px Inter;box-shadow:0 12px 34px rgba(37,211,102,.35);z-index:50}
-    .wa-fab:hover{filter:brightness(1.05)}
-    .wa-fab svg{width:18px;height:18px;display:block}
-    .err{color:#b91c1c;background:#fee2e2;padding:10px;border-radius:8px}
+    /* Filtreler */
+    .filters{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px}
+    .filters input,.filters select{
+      background:#0e162a;border:1px solid rgba(255,255,255,.08);color:var(--txt);
+      padding:10px 12px;border-radius:10px;min-width:160px
+    }
+
+    /* --- Portföy grid: her satırda 3 --- */
+    #cards{
+      display:grid !important;
+      grid-template-columns:repeat(3,minmax(0,1fr)) !important;
+      gap:22px;
+    }
+    @media (max-width:1024px){ #cards{grid-template-columns:repeat(2,minmax(0,1fr)) !important;} }
+    @media (max-width:640px){ #cards{grid-template-columns:1fr !important;} }
+
+    /* --- Kart: resim üstte, bilgi altta --- */
+    .card{display:flex !important;flex-direction:column !important;background:var(--card);border-radius:16px;box-shadow:var(--ring);overflow:hidden;text-decoration:none;color:var(--txt)}
+    .card .img-wrap{width:100%;aspect-ratio:16/9;background:#0b1428}
+    .card .img-wrap img{width:100%;height:100%;object-fit:cover;display:block}
+    .card .pb{padding:14px 16px}
+    .card h3{margin:0 0 8px 0}
+    .card .meta{color:var(--muted);font-size:.95rem;margin-bottom:8px}
+    .card .price{color:var(--danger);font-weight:800}
+    .small{font-size:.85rem}
+
+    /* CSV hata metni */
+    .err{color:#ff9aa8;background:#2b0f19;padding:10px 12px;border:1px solid #7a2434;border-radius:10px}
+
+    /* WhatsApp sabit düğmesi */
+    .fab-wa{
+      position:fixed;right:18px;bottom:18px;width:58px;height:58px;border-radius:16px;
+      background:#25d366;box-shadow:0 6px 22px rgba(0,0,0,.35);display:grid;place-items:center;
+      color:#062b11;text-decoration:none;font-weight:800;z-index:60
+    }
+    .fab-wa svg{width:28px;height:28px;display:block}
   </style>
 </head>
 <body>
 
-  <!-- Üst Çubuk -->
+  <!-- Üst bar: saat + kurlar -->
   <div class="topbar">
     <div class="dt"><span id="clock">--:--</span> • <span id="date">--.--.----</span></div>
-    <div id="rates">Kurlar yükleniyor…</div>
+    <div id="rates" class="muted">USD • EUR • GBP</div>
   </div>
 
-  <!-- Başlık / Menü -->
-  <header class="nav">
+  <!-- Başlık/Navigasyon -->
+  <header class="nav section" style="padding-top:18px;padding-bottom:0">
     <div class="brand">
       <div class="dot">PY</div>
-      <div class="txt">
-        <b>Pınar Yıldız</b><br>
-        <span class="muted">Çayyolu • Ankara</span>
-      </div>
+      <div class="txt"><b>Pınar Yıldız</b><span>Çayyolu • Ankara</span></div>
     </div>
     <nav>
       <a href="#portfoy">Portföy</a>
@@ -71,26 +89,13 @@
     </nav>
   </header>
 
-  <!-- Kahraman görsel (mevcut banner’ını bozmayalım) -->
-  <section class="hero-banner">
-    <img src="assets/banner.jpg" onerror="this.style.display='none';document.getElementById('hero-fb').style.display='grid';" alt="Atakule">
-    <div id="hero-fb" class="overlay" style="display:none">
-      <div class="headline">Çayyolu’nun <b>Ödüllü</b> Danışmanı</div>
-      <div class="subhead"><em>Güzel hayaller, doğru adımlarla gerçeğe dönüşür.</em></div>
-    </div>
-    <div class="overlay">
-      <div class="headline">Çayyolu’nun <b>Ödüllü</b> Danışmanı</div>
-      <div class="subhead"><em>Güzel hayaller, doğru adımlarla gerçeğe dönüşür.</em></div>
-    </div>
-  </section>
-
-  <!-- Hakkımda -->
-  <section id="hakkinda" class="intro section">
-    <div class="intro-grid" style="display:grid;grid-template-columns:280px 1fr;gap:24px;align-items:center">
-      <div class="intro-photo"><img src="assets/award.jpg" alt="Ödül" style="width:100%;border-radius:16px"></div>
-      <div class="intro-copy">
-        <h1><span class="muted">Gayrimenkul Profesyoneli</span><br><strong>Pınar YILDIZ</strong></h1>
-        <ul class="bullets">
+  <!-- Hakkında -->
+  <section id="hakkinda" class="section">
+    <div style="display:grid;grid-template-columns:280px 1fr;gap:22px;align-items:center">
+      <img src="assets/award.jpg" alt="Ödül" style="width:100%;border-radius:16px;box-shadow:var(--ring)" />
+      <div>
+        <h1 style="margin:0 0 8px 0"><span class="muted">Gayrimenkul Profesyoneli</span><br /><strong>Pınar YILDIZ</strong></h1>
+        <ul style="margin:8px 0 12px 18px;line-height:1.7">
           <li>📍 RE/MAX Su 2024 Ciro & Portföy Birincisi</li>
           <li>🏆 Müşteri Memnuniyeti Ödülü Sahibi</li>
           <li>⏱ 1 günde kiralama • 48 saatte satış</li>
@@ -98,7 +103,7 @@
           <li>🎓 Maliye mezunu</li>
         </ul>
         <p class="vision">“Evleri değil; insanların hayatına dokunan hikâyeleri satıyorum.”</p>
-        <div class="socials" style="display:flex;gap:12px;flex-wrap:wrap">
+        <div class="socials" style="display:flex;gap:10px;flex-wrap:wrap">
           <a target="_blank" href="https://www.instagram.com/remaxsupinar">📸 Instagram</a>
           <a target="_blank" href="https://www.linkedin.com/in/p%C4%B1nar-y%C4%B1ld%C4%B1z-4ab33a333">in LinkedIn</a>
           <a target="_blank" href="https://wa.me/905387026443">💬 WhatsApp</a>
@@ -107,12 +112,12 @@
     </div>
   </section>
 
-  <!-- PORTFÖY -->
+  <!-- Portföy -->
   <section id="portfoy" class="section">
     <h2>Portföy</h2>
 
     <div class="filters">
-      <input id="q" placeholder="Arama: başlık, semt…">
+      <input id="q" placeholder="Arama: başlık, semt…" />
       <select id="f_status">
         <option value="">Durum</option>
         <option>Satılık</option>
@@ -120,14 +125,14 @@
       </select>
       <select id="f_rooms">
         <option value="">Oda</option>
-        <option>1+1</option><option>2+1</option><option>3+1</option>
-        <option>4+1</option><option>4+2</option><option>5+2</option>
+        <option>1+1</option><option>2+1</option><option>3+1</option><option>4+1</option><option>5+2</option>
       </select>
-      <select id="f_sort">
+      <select id="f_sort" title="Sırala">
         <option value="">Sırala</option>
-        <option value="price_desc">Fiyat (yüksek → düşük)</option>
-        <option value="price_asc">Fiyat (düşük → yüksek)</option>
-        <option value="m2_desc">m² (büyük → küçük)</option>
+        <option value="price_asc">Fiyat (Artan)</option>
+        <option value="price_desc">Fiyat (Azalan)</option>
+        <option value="m2_desc">m² (Büyükten)</option>
+        <option value="m2_asc">m² (Küçükten)</option>
       </select>
     </div>
 
@@ -140,11 +145,10 @@
   <section id="oduller" class="section">
     <h2>Ödüller</h2>
     <div class="badges" style="display:flex;flex-wrap:wrap;gap:10px">
-      <span>2024 Yıldızlar Kulübü</span><span>RE/MAX Su – İşlem Birincisi</span>
-      <span>RE/MAX Su – Ciro Birincisi</span><span>RE/MAX Su – Portföy Birincisi</span>
-      <span>RE/MAX Su – Müşteri Memnuniyeti Birincisi</span>
-      <span>2025 Q1&Q2 Müşteri Memnuniyeti</span><span>2025 Q1&Q2 İşlem</span>
-      <span>2025 Q1&Q2 Ciro</span><span>2025 Haziran – 3. Bölge Müşteri Memnuniyeti</span>
+      <span>2024 Yıldızlar Kulübü</span><span>RE/MAX Su – İşlem Birincisi</span><span>RE/MAX Su – Ciro Birincisi</span>
+      <span>RE/MAX Su – Portföy Birincisi</span><span>RE/MAX Su – Müşteri Memnuniyeti Birincisi</span>
+      <span>2025 Q1&Q2 Müşteri Memnuniyeti</span><span>2025 Q1&Q2 İşlem</span><span>2025 Q1&Q2 Ciro</span>
+      <span>2025 Haziran – 3. Bölge Müşteri Memnuniyeti</span>
     </div>
   </section>
 
@@ -159,163 +163,160 @@
     <h2>İletişim</h2>
     <div class="grid two" style="display:grid;grid-template-columns:1fr 1fr;gap:18px">
       <div>
-        <ul class="contact">
+        <ul class="contact" style="line-height:1.8">
           <li>📍 Dodurga, Çınarcık Sk Ankarakent Sit D:2/1A, 06810 Çankaya/Ankara</li>
           <li>☎️ (0312) 236 83 83</li>
           <li>📱 <a href="tel:+905387026443">0538 702 64 43</a></li>
           <li>📧 <a href="mailto:pinary@remax-su-ank.com">pinary@remax-su-ank.com</a></li>
         </ul>
       </div>
-      <iframe class="map" loading="lazy" style="width:100%;min-height:280px;border:0;border-radius:12px"
-        src="https://www.google.com/maps?q=Dodurga,+Çınarcık+Sk+Ankarakent+Sit+D:2/1A,+06810+Çankaya/Ankara&output=embed"></iframe>
+      <iframe class="map" loading="lazy"
+              src="https://www.google.com/maps?q=Dodurga,+Çınarcık+Sk+Ankarakent+Sit+D:2/1A,+06810+Çankaya/Ankara&output=embed"
+              style="width:100%;min-height:280px;border:0;border-radius:14px;box-shadow:var(--ring)"></iframe>
     </div>
   </section>
 
-  <footer class="footer section" style="text-align:center">© 2025 Pınar Yıldız • Çayyolu / Ankara</footer>
+  <footer class="footer section" style="padding-top:8px">© 2025 Pınar Yıldız • Çayyolu / Ankara</footer>
 
-  <!-- WhatsApp Yüzen Buton -->
-  <a class="wa-fab" target="_blank" rel="noopener"
-     id="waFab"
-     href="https://wa.me/905387026443?text=Merhaba%20P%C4%B1nar%20Han%C4%B1m%2C%20portf%C3%B6y%C3%BCn%C3%BCzdeki%20ilanlarla%20ilgileniyorum.">
-    <svg viewBox="0 0 24 24" fill="none"><path d="M20.52 3.49A11.78 11.78 0 0 0 12.07 0C5.42 0 .02 5.4.02 12.05c0 2 .52 3.94 1.51 5.67L0 24l6.43-1.48a12.04 12.04 0 0 0 5.64 1.43h.01c6.65 0 12.05-5.4 12.05-12.05a12 12 0 0 0-3.6-8.41ZM12.08 22.02h-.01a10 10 0 0 1-5.1-1.39l-.37-.22-3.82.88.82-3.72-.24-.38a10 10 0 1 1 8.72 4.83Zm5.5-7.89c-.3-.15-1.75-.86-2.02-.96-.27-.1-.47-.15-.67.15-.2.3-.77.95-.94 1.15-.17.2-.35.22-.65.07-.3-.15-1.26-.46-2.4-1.46-.88-.79-1.47-1.76-1.65-2.06-.17-.3-.02-.46.13-.61.14-.14.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.07-.15-.67-1.61-.92-2.2-.24-.58-.49-.5-.67-.5h-.57c-.2 0-.52.07-.8.37-.27.3-1.05 1.02-1.05 2.5s1.08 2.9 1.23 3.1c.15.2 2.12 3.23 5.13 4.52.72.31 1.28.5 1.72.64.72.23 1.38.2 1.9.12.58-.09 1.75-.72 2-1.41.24-.69.24-1.29.17-1.41-.07-.12-.27-.2-.57-.35Z" fill="#fff"/></svg>
-    WhatsApp
+  <!-- WhatsApp sabit buton -->
+  <a class="fab-wa"
+     href="https://wa.me/905387026443?text=Merhaba%20P%C4%B1nar%20Han%C4%B1m,%20portf%C3%B6ydeki%20bir%20ilan%C4%B1%20g%C3%B6r%C3%BC%C5%9Ft%C3%BCrmek%20istiyorum."
+     target="_blank" rel="noopener" aria-label="WhatsApp">
+     <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+       <path d="M20.5 3.5A11 11 0 0 0 3.1 18.1L2 22l4-.9A11 11 0 1 0 20.5 3.5ZM12 20a8 8 0 0 1-4.1-1.1l-.3-.2-2.4.6.6-2.4-.2-.3A8 8 0 1 1 12 20Zm4.6-5.9c-.2-.1-1.3-.7-1.4-.8s-.3-.1-.5.1c-.1.2-.6.8-.7.9-.1.1-.3.2-.5.1s-1-.4-1.9-1.2a7.2 7.2 0 0 1-1.3-1.6c-.1-.2 0-.3.1-.4l.3-.4c.1-.1.1-.3 0-.5s-.5-1.2-.7-1.6c-.2-.4-.4-.3-.5-.3h-.4c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.4s1 2.8 1.1 3 .7 1.4 1.7 2.3c1.1.9 2.1 1.2 2.4 1.3.3.1 1.6.5 2.2.3.7-.2 1.3-.6 1.5-1.1.2-.5.2-1 .2-1.1 0-.1-.2-.2-.4-.3Z"/>
+     </svg>
   </a>
 
-  <!-- ==== JS ==== -->
   <script>
-    /* Saat/Tarih */
+    /* ====== Saat / Tarih ====== */
     function pad(n){return n<10?'0'+n:n}
     function tick(){
       const d=new Date();
       document.getElementById('clock').textContent = pad(d.getHours())+':'+pad(d.getMinutes());
-      document.getElementById('date').textContent = pad(d.getDate())+'.'+pad(d.getMonth()+1)+'.'+d.getFullYear();
+      document.getElementById('date').textContent  = pad(d.getDate())+'.'+pad(d.getMonth()+1)+'.'+d.getFullYear();
     }
-    setInterval(tick,1000); tick();
+    tick(); setInterval(tick, 1000);
 
-    /* Kurlar: 3 farklı kaynaktan dener */
+    /* ====== Kurlar (yedekli) ====== */
     async function loadRates(){
-      const el = document.getElementById('rates');
-      const fmt = v => Number(v).toFixed(2);
-
-      async function tryOne(url, pick){
+      const el=document.getElementById('rates');
+      async function tryOne(url,pick){
         try{
-          const r = await fetch(url, {cache:'no-store'});
+          const r=await fetch(url,{cache:'no-store'});
           if(!r.ok) throw 0;
-          const j = await r.json();
-          const o = pick(j);
+          const j=await r.json();
+          const o=pick(j);
           if(o){
-            el.textContent = `USD ₺ ${fmt(o.usd)} • EUR ₺ ${fmt(o.eur)} • GBP ₺ ${fmt(o.gbp)}`;
+            el.textContent=`USD ₺ ${o.usd} • EUR ₺ ${o.eur} • GBP ₺ ${o.gbp}`;
             return true;
           }
         }catch(e){}
         return false;
       }
-
-      if(await tryOne('https://api.exchangerate.host/latest?base=TRY&symbols=USD,EUR,GBP',
-        j => j && j.rates ? ({usd:1/j.rates.USD, eur:1/j.rates.EUR, gbp:1/j.rates.GBP}) : null)) return;
-
-      if(await tryOne('https://api.frankfurter.app/latest?from=TRY&to=USD,EUR,GBP',
-        j => j && j.rates ? ({usd:1/j.rates.USD, eur:1/j.rates.EUR, gbp:1/j.rates.GBP}) : null)) return;
-
-      if(await tryOne('https://open.er-api.com/v6/latest/TRY',
-        j => j && j.rates ? ({usd:1/j.rates.USD, eur:1/j.rates.EUR, gbp:1/j.rates.GBP}) : null)) return;
-
-      el.textContent = 'Kurlar yüklenemedi';
+      // 1) exchangerate.host
+      if(await tryOne('https://api.exchangerate.host/latest?base=TRY&symbols=USD,EUR,GBP', j=> j?.rates?({usd:(1/j.rates.USD).toFixed(2),eur:(1/j.rates.EUR).toFixed(2),gbp:(1/j.rates.GBP).toFixed(2)}):null)) return;
+      // 2) open.er-api.com
+      if(await tryOne('https://open.er-api.com/v6/latest/TRY', j=> j?.rates?({usd:(1/j.rates.USD).toFixed(2),eur:(1/j.rates.EUR).toFixed(2),gbp:(1/j.rates.GBP).toFixed(2)}):null)) return;
+      // 3) frankfurter
+      if(await tryOne('https://api.frankfurter.app/latest?from=TRY&to=USD,EUR,GBP', j=> j?.rates?({usd:(1/j.rates.USD).toFixed(2),eur:(1/j.rates.EUR).toFixed(2),gbp:(1/j.rates.GBP).toFixed(2)}):null)) return;
+      el.textContent='Kurlar yüklenemedi';
     }
-    loadRates(); setInterval(loadRates, 300000); // 5 dk
+    loadRates(); setInterval(loadRates, 300000);
 
-    /* ---- Portföy ---- */
-
-    // CSV -> function JSON’dan gelen görseli düzelt
-    function extractDirectImage(s){
-      if(!s) return '';
-      let t = s.trim();
-      // [url=...][img]https://i.ibb.co/...jpg[/img][/url]
-      let m = t.match(/\[img\](https?:\/\/[^\[]+?)\[\/img\]/i);
-      if(m && m[1]) return m[1];
-      // sadece i.ibb.co/... gelmişse bırak
-      return t;
+    /* ====== Portföy ====== */
+    function imgOf(it){
+      // Google Sheet'te imgbb/ibb gibi direkt resim URL'i varsa onu kullan
+      // yoksa yedek görsel
+      const u=(it.image_url||'').trim();
+      return (u.startsWith('http') && !u.includes('[img]')) ? u : 'assets/no-image.jpg';
     }
-    const NO_IMG = 'assets/no-image.jpg';
-    const priceFmt = (x)=>{
-      if(x == null) return '';
-      const n = Number(String(x).replace(/[^\d]/g,'')) || 0;
-      return n.toLocaleString('tr-TR');
-    };
-    const num = (x)=> Number(String(x||'').replace(/[^\d]/g,'')) || 0;
+    function num(s){ return Number(String(s||'').replace(/[^\d]/g,'')) || 0; }
 
-    function cardHTML(x){
-      const href = (x.link && x.link.startsWith('http')) ? x.link : '#';
-      const img = extractDirectImage(x.image_url) || NO_IMG;
-      const whatsappHref =
-        `https://wa.me/905387026443?text=${encodeURIComponent('Merhaba, '+(x.title||'ilan')+' ile ilgileniyorum: '+(x.link||location.href))}`;
+    function card(x){
+      const img = imgOf(x);
+      const href = (x.link && String(x.link).startsWith('http')) ? x.link : '#';
       return `
-        <a class="card" target="_blank" rel="noopener" href="${href}">
-          <div class="img-wrap">
-            <img loading="lazy" src="${img}" alt="${(x.title||'')}" onerror="this.onerror=null;this.src='${NO_IMG}'">
-          </div>
-          <div class="pb">
-            <h3>${x.title||''}</h3>
-            <div class="meta">${x.district||''} • ${x.rooms||''} • ${x.m2||''} m²</div>
-            <div class="price">${x.price ? priceFmt(x.price) : ''}</div>
-            <div class="small muted">Detaya gitmek için karta tıklayın • <a target="_blank" href="${whatsappHref}">WhatsApp</a></div>
-          </div>
-        </a>`;
+      <a class="card" target="_blank" rel="noopener" href="${href}">
+        <div class="img-wrap"><img src="${img}" alt="${(x.title||'').replace(/"/g,'&quot;')}" onerror="this.onerror=null;this.src='assets/no-image.jpg'"></div>
+        <div class="pb">
+          <h3>${x.title||''}</h3>
+          <div class="meta">${x.district||''} • ${x.rooms||''} • ${x.m2||''} m²</div>
+          <div class="price">${x.price||''}</div>
+          <div class="small muted">Detaya gitmek için karta tıklayın • WhatsApp</div>
+        </div>
+      </a>`;
     }
 
-    function render(items){
-      const q = document.getElementById('q').value.toLowerCase();
-      const st = document.getElementById('f_status').value;
-      const rm = document.getElementById('f_rooms').value;
-      const sort = document.getElementById('f_sort').value;
+    let RAW = []; // orijinal veri
 
-      let arr = items.filter(x =>
-        (!q || String(x.title||'').toLowerCase().includes(q) || String(x.district||'').toLowerCase().includes(q)) &&
-        (!st || x.status === st) &&
-        (!rm || x.rooms === rm)
+    function render(data){
+      const q   = document.getElementById('q').value.toLowerCase();
+      const st  = document.getElementById('f_status').value;
+      const rm  = document.getElementById('f_rooms').value;
+      const srt = document.getElementById('f_sort').value;
+
+      let items = data.filter(x =>
+        (!q  || String(x.title||'').toLowerCase().includes(q) || String(x.district||'').toLowerCase().includes(q)) &&
+        (!st || x.status===st) &&
+        (!rm || x.rooms===rm)
       );
 
-      if(sort==='price_desc') arr.sort((a,b)=>num(b.price)-num(a.price));
-      else if(sort==='price_asc') arr.sort((a,b)=>num(a.price)-num(b.price));
-      else if(sort==='m2_desc') arr.sort((a,b)=>num(b.m2)-num(a.m2));
+      // Sıralama
+      if(srt==='price_asc')  items.sort((a,b)=> num(a.price) - num(b.price));
+      if(srt==='price_desc') items.sort((a,b)=> num(b.price) - num(a.price));
+      if(srt==='m2_asc')     items.sort((a,b)=> num(a.m2)    - num(b.m2));
+      if(srt==='m2_desc')    items.sort((a,b)=> num(b.m2)    - num(a.m2));
 
-      document.getElementById('cards').innerHTML = arr.map(cardHTML).join('');
-      document.getElementById('empty').style.display = arr.length ? 'none':'block';
+      document.getElementById('cards').innerHTML = items.map(card).join('');
+      document.getElementById('empty').style.display = items.length?'none':'block';
     }
 
-    async function loadPortfolio(){
-      const e = document.getElementById('csvErr'); e.style.display='none';
+    async function loadAndRender(){
+      const e=document.getElementById('csvErr'); e.style.display='none';
       try{
-        const r = await fetch('/.netlify/functions/portfolio', {cache:'no-store'});
-        if(!r.ok) throw new Error('HTTP '+r.status);
-        const data = await r.json();
-        window._DATA = data;
-        render(data);
+        const res = await fetch('/.netlify/functions/portfolio',{cache:'no-store'});
+        if(!res.ok) throw new Error('HTTP '+res.status);
+        const data = await res.json();
+        RAW = Array.isArray(data) ? data : [];
+        render(RAW);
       }catch(err){
         e.textContent = 'Portföy yüklenemedi: '+err.message+' — CSV yayın linkini kontrol edin (Dosya → Web’de yayımla → CSV).';
-        e.style.display = 'block';
+        e.style.display='block';
       }
     }
-    ['q','f_status','f_rooms','f_sort'].forEach(id=>{
-      document.getElementById(id).addEventListener('input', ()=>render(window._DATA||[]));
-    });
-    loadPortfolio(); setInterval(loadPortfolio, 120000);
 
-    /* Yorum kartları */
+    ['q','f_status','f_rooms','f_sort'].forEach(id =>
+      document.getElementById(id).addEventListener('input',()=>render(RAW))
+    );
+
+    loadAndRender();
+    setInterval(loadAndRender, 120000);
+
+    /* ====== Yorumlar ====== */
     const REVIEWS=[
       {n:'Seda K.',t:'1 günde kiralık; süreç şeffaf ve çok profesyoneldi.',s:5},
       {n:'Gökhan T.',t:'Doğru fiyat analiziyle 3 günde satış.',s:5},
       {n:'Mehmet A.',t:'Çayyolu bölgesinde rakipsiz, kesinlikle tavsiye ederim.',s:5},
       {n:'Ebru D.',t:'İlk görüşmeden tapuya kadar yanımızdaydı.',s:5},
       {n:'Nur S.',t:'Kiralama 48 saatte tamamlandı.',s:5},
-      {n:'Tamer Y.',t:'İletişimi ve hızını çok beğendik.',s:5}
+      {n:'Tamer Y.',t:'İletişimi ve hızını çok beğendik.',s:5},
+      {n:'Selin B.',t:'Yatırım için en doğru seçenekleri sundu.',s:4},
+      {n:'Mert C.',t:'Fotoğraf ve ilan dili mükemmeldi.',s:5},
+      {n:'Gizem K.',t:'Süreç boyunca her adım bilgi verildi.',s:5},
+      {n:'Emre L.',t:'Bölgede ciddi portföy ağı var.',s:5},
+      {n:'Damla P.',t:'Kısa sürede kaliteli kiracı bulundu.',s:5},
+      {n:'Bora Z.',t:'Sonuç odaklı ve güven veriyor.',s:5}
     ];
-    const star = n=>'★★★★★'.slice(0,n);
-    document.getElementById('twrap').innerHTML =
-      REVIEWS.map(r=>`<div class="tcard" style="border:1px solid #eee;padding:14px;border-radius:12px">
-        <div class="thead" style="display:flex;justify-content:space-between"><b>${r.n}</b><span class="src muted">Google</span></div>
-        <div class="stars" style="color:#f59e0b;margin:6px 0">${star(r.s)}</div>
-        <div>${r.t}</div></div>`).join('');
+    function star(n){return '★★★★★'.slice(0,n)}
+    document.getElementById('twrap').innerHTML = REVIEWS.map(r =>
+      `<div class="tcard" style="background:var(--card);padding:14px;border-radius:14px;box-shadow:var(--ring)">
+         <div class="thead" style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+           <b>${r.n}</b><span class="src muted">Google</span>
+         </div>
+         <div class="stars" style="color:#ffd166;margin-bottom:6px">${star(r.s)}</div>
+         <div>${r.t}</div>
+       </div>`
+    ).join('');
   </script>
 </body>
 </html>
