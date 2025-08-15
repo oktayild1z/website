@@ -7,12 +7,14 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
 
-<!-- Yalnızca kart görselini düzgün göstermek için minik ek stil -->
+<!-- Kart görselleri için küçük ek stil -->
 <style>
-  /* Karttaki kapak görseli 16:9 oranda kırpılsın, taşan kısımlar gizlensin */
-  .card.p .thumb{position:relative;width:100%;aspect-ratio:16/9;overflow:hidden;border-radius:16px 16px 0 0;background:#0f1626}
+  .card.p .thumb{
+    position:relative;width:100%;aspect-ratio:16/9;
+    overflow:hidden;border-radius:16px 16px 0 0;background:#0f1626;
+  }
   .card.p .thumb img{width:100%;height:100%;object-fit:cover;display:block}
-  /* Eğer .card.p doğrudan <img> içeriyorsa (thumb yoksa) yine de kaplasın */
+  /* Eğer bazı şablonlarda <img> doğrudan kart içinde ise yine kaplasın */
   .card.p > img{width:100%;height:260px;object-fit:cover;display:block}
 </style>
 </head>
@@ -79,10 +81,16 @@
 <footer class="footer">© 2025 Pınar Yıldız • Çayyolu / Ankara</footer>
 
 <script>
+/* ======= SAAT & TARİH ======= */
 function pad(n){return n<10?'0'+n:n}
-function tick(){const d=new Date();document.getElementById('clock').textContent=pad(d.getHours())+':'+pad(d.getMinutes());document.getElementById('date').textContent=pad(d.getDate())+'.'+pad(d.getMonth()+1)+'.'+d.getFullYear();}
+function tick(){
+  const d=new Date();
+  document.getElementById('clock').textContent=pad(d.getHours())+':'+pad(d.getMinutes());
+  document.getElementById('date').textContent=pad(d.getDate())+'.'+pad(d.getMonth()+1)+'.'+d.getFullYear();
+}
 setInterval(tick,1000); tick();
 
+/* ======= KURLAR ======= */
 async function loadRates(){
   const el=document.getElementById('rates');
   async function tryOne(url,pick){
@@ -102,43 +110,43 @@ async function loadRates(){
 }
 loadRates(); setInterval(loadRates,300000);
 
-/* === PORTFÖY ===
-   - Veri .netlify/functions/portfolio'dan gelir
-   - image_url yok/bozuksa assets/no-image.jpg kullanılır
-*/
+/* ======= PORTFÖY ======= */
+/* veri .netlify/functions/portfolio'dan gelir; resim yoksa placeholder kullanılır */
 
-// (Eski CSV sabitini bıraktım ama kullanılmıyor)
-window.PORTFOLIO_CSV = '';
+// İstersen aşağıdaki 2 satırı şu şekilde de yapabilirsin:
+// window.PLACEHOLDER = 'assets/no-image.jpg';  // dosya kullanmak için
+window.PLACEHOLDER = `data:image/svg+xml;utf8,` + encodeURIComponent(`
+  <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="675">
+    <defs>
+      <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0" stop-color="#0f1626"/>
+        <stop offset="1" stop-color="#121a2b"/>
+      </linearGradient>
+    </defs>
+    <rect width="100%" height="100%" fill="url(#g)"/>
+    <text x="50%" y="50%" fill="#62728f" font-size="36" font-family="Inter, system-ui" text-anchor="middle" dominant-baseline="middle">
+      Görsel yok
+    </text>
+  </svg>
+`);
 
-function normalizeHeader(h){
-  h=(h||'').trim().toLowerCase();
-  const map={
-    'başlık':'title','baslik':'title','title':'title',
-    'fiyat':'price','price':'price',
-    'semt':'district','district':'district',
-    'm2':'m2','metrekare':'m2',
-    'oda':'rooms','rooms':'rooms',
-    'durum':'status','status':'status',
-    'sahibinden link':'link','ilan linki':'link','link':'link',
-    'kapak fotograf':'image_url','kapak fotoğraf':'image_url','image_url':'image_url','görsel':'image_url','resim':'image_url',
-    'tarih':'updated_at','updated_at':'updated_at'
-  };
-  return map[h]||h;
+function isDirectImage(u){
+  return /^https?:\/\/.+\.(jpg|jpeg|png|webp|gif)(\?.*)?$/i.test(u||'');
+}
+function imgSrc(it){
+  const u=(it && it.image_url ? String(it.image_url).trim() : '');
+  return (u && (u.startsWith('http://')||u.startsWith('https://')) && isDirectImage(u))
+    ? u
+    : window.PLACEHOLDER;
 }
 
-// Görsel fallback
-function imgOf(it){
-  return (it.image_url && it.image_url.startsWith('http')) ? it.image_url : 'assets/no-image.jpg';
-}
-
-// Kart şablonu (görsel cover)
 function card(x){
-  const img=imgOf(x);
+  const src = imgSrc(x);
   const href=(x.link&&x.link.startsWith('http'))?x.link:'#';
-  return `<a class="card p ${img?'hasimg':''}" target="_blank" rel="noopener" href="${href}">
+  return `<a class="card p" target="_blank" rel="noopener" href="${href}">
     <div class="thumb">
-      <img src="${img}" alt="${x.title||''}" loading="lazy"
-           onerror="this.onerror=null;this.src='assets/no-image.jpg'">
+      <img src="${src}" alt="${x.title||''}" loading="lazy"
+           onerror="this.onerror=null;this.src=window.PLACEHOLDER">
     </div>
     <div class="pb"><h3>${x.title||''}</h3>
       <div class="meta">${x.district||''} • ${x.rooms||''} • ${x.m2||''} m²</div>
@@ -163,7 +171,7 @@ async function loadAndRender(){
     const res = await fetch('/.netlify/functions/portfolio', {cache:'no-store'});
     if(!res.ok) throw new Error('HTTP '+res.status);
     const data = await res.json();
-    // Opsiyonel: fiyat sayısal alana göre sırala (varsa)
+    // İsteğe bağlı sıralama: fiyatı sayısal alana göre (varsa)
     data.sort((a,b)=> (b.price_num||0) - (a.price_num||0));
     window._DATA=data; render(data);
   }catch(err){
@@ -174,7 +182,7 @@ async function loadAndRender(){
 ['q','f_status','f_rooms'].forEach(id=>document.getElementById(id).addEventListener('input',()=>render(window._DATA||[])));
 loadAndRender(); setInterval(loadAndRender,120000);
 
-// Yorumlar
+/* ======= YORUMLAR ======= */
 const REVIEWS=[
   {n:'Seda K.',t:'1 günde kiralık; süreç şeffaf ve çok profesyoneldi.',s:5},
   {n:'Gökhan T.',t:'Doğru fiyat analiziyle 3 günde satış.',s:5},
