@@ -2,116 +2,54 @@
 <html lang="tr">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Pınar Yıldız | Çayyolu Ankara</title>
-
-  <!-- Yazı tipi -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet" />
-
-  <!-- Mevcut sitenin stilleri -->
   <link rel="stylesheet" href="styles.css" />
-
-  <!-- Bu sayfaya özel küçük dokunuşlar -->
   <style>
-    :root{
-      --radius: 16px;
-      --muted:#8a8f98;
-      --card-bg: #ffffff0d; /* dark modla da uyumlu hafif transparan */
-      --shadow: 0 10px 30px rgba(0,0,0,.15);
-      --brand:#2ad163; /* WhatsApp */
-      --accent:#ef4444; /* fiyat rengi */
-    }
-
-    /* Top bar */
-    .topbar{position:sticky;top:0;z-index:50}
-
-    /* HERO */
-    .hero-banner{position:relative; overflow:hidden}
-    .hero-banner>img{
-      width:100%; height:380px; object-fit:cover; display:block;
-      filter: saturate(1.05) contrast(1.05);
-    }
-    .hero-banner .overlay{
-      position:absolute; inset:0;
-      display:grid; place-content:center;
-      text-align:center; color:#fff;
-      background: linear-gradient(to bottom, rgba(0,0,0,.25), rgba(0,0,0,.45));
-    }
-    .hero-banner .headline{font-size:clamp(24px,4vw,42px); font-weight:800; letter-spacing:.2px}
-    .hero-banner .subhead{margin-top:8px; opacity:.95}
-
-    /* PORTFÖY KARTLARI */
-    .grid.three{display:grid; gap:22px; grid-template-columns:repeat(3,minmax(0,1fr))}
-    @media (max-width:1100px){ .grid.three{grid-template-columns:repeat(2,minmax(0,1fr))} }
-    @media (max-width:700px){ .grid.three{grid-template-columns:1fr} }
-
-    .card{
-      background:var(--card-bg);
-      border-radius:var(--radius);
-      overflow:hidden;
-      box-shadow: var(--shadow);
-      display:flex; flex-direction:column;
-      transition: transform .18s ease, box-shadow .18s ease;
-    }
-    .card:hover{ transform: translateY(-3px); box-shadow:0 18px 40px rgba(0,0,0,.18) }
-    .card>img{
-      width:100%; aspect-ratio: 16/9; object-fit:cover; background:#0f1520;
-      display:block;
-    }
-    .card .pb{ padding:16px 18px 18px }
-    .card h3{ margin:0 0 6px 0; font-size:18px }
-    .card .meta{ color:var(--muted); font-size:13px; margin-bottom:8px }
-    .card .price{ color:var(--accent); font-size:20px; font-weight:800 }
-    .card .small{ font-size:12px; margin-top:8px; color:var(--muted)}
-
-    /* ÖDÜLLER */
+    /* Ödüller 3x3 grid */
     .awards-grid{
-      display:grid; gap:16px;
-      grid-template-columns:repeat(3, minmax(0,1fr));
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:20px;
+      margin-top:20px
     }
-    @media (max-width:1000px){ .awards-grid{ grid-template-columns:repeat(2,1fr)} }
-    @media (max-width:640px){ .awards-grid{ grid-template-columns:1fr } }
-
-    .award{
-      background:var(--card-bg);
-      border-radius: var(--radius);
-      overflow:hidden;
-      box-shadow: var(--shadow);
+    .awards-grid img{
+      width:100%;
+      height:100%;
+      max-height:520px;
+      object-fit:cover;
+      border-radius:16px
     }
-    .award img{
-      width:100%; height:100%; display:block; object-fit:cover;
-      aspect-ratio: 1 / 1; /* kare kırp */
-      background:#0f1520;
-    }
-
+    /* Hero görsel fallback görünürlüğü */
+    .hero-banner .overlay-fallback{display:none}
+    .hero-banner img[hidden]+.overlay-fallback{display:grid}
+    /* Kart: resim üstte / bilgi altta */
+    .card.p.hasimg{display:flex;flex-direction:column;padding:0}
+    .card.p.hasimg img{width:100%;height:220px;object-fit:cover;border-top-left-radius:16px;border-top-right-radius:16px}
+    .card.p.hasimg .pb{padding:16px}
     /* WhatsApp sabit buton */
-    .wa-float{
-      position:fixed; right:18px; bottom:18px; z-index:80;
-      width:58px; height:58px; border-radius:50%;
-      display:grid; place-items:center; background:var(--brand);
-      color:#fff; box-shadow:0 10px 28px rgba(42,209,99,.55);
-      transition:transform .15s ease;
+    .wa-fab{
+      position:fixed;right:18px;bottom:18px;z-index:999;
+      width:56px;height:56px;border-radius:50%;
+      background:#25D366;display:flex;align-items:center;justify-content:center;
+      box-shadow:0 8px 30px rgba(0,0,0,.25)
     }
-    .wa-float:hover{ transform: scale(1.06) }
-    .wa-float svg{ width:28px; height:28px; display:block }
-
-    /* Hata / boş durum mesajları */
-    .err{color:#ef4444; background:#ef444422; padding:10px 12px; border-radius:10px}
-    .muted{color:var(--muted)}
+    .wa-fab img{width:28px;height:28px;display:block}
+    /* Küçük ekranlarda ödüller 2 sütun */
+    @media (max-width:900px){ .awards-grid{grid-template-columns:repeat(2,1fr)} }
+    @media (max-width:600px){ .awards-grid{grid-template-columns:1fr} }
   </style>
 </head>
-
 <body>
-  <!-- Üst bar -->
+
+  <!-- Üst çubuk: saat & kurlar -->
   <div class="topbar">
-    <div class="dt">
-      <span id="clock">--:--</span>
-      <span id="date">--.--.----</span>
-    </div>
-    <div id="rates">USD • EUR • GBP</div>
+    <div class="dt"><span id="clock">--:--</span> <span id="date">--.--.----</span></div>
+    <div id="rates">Kurlar yükleniyor…</div>
   </div>
 
-  <!-- NAV -->
+  <!-- Navigasyon -->
   <header class="nav">
     <div class="brand">
       <div class="dot">PY</div>
@@ -120,31 +58,27 @@
     <nav>
       <a href="#portfoy">Portföy</a>
       <a href="#hakkinda">Hakkımda</a>
-      <a href="#oduller">Ödüller</a>
+      <a href="#awards">Ödüller</a>
       <a href="#yorumlar">Yorumlar</a>
       <a class="btn" href="#iletisim">İletişim</a>
     </nav>
   </header>
 
-  <!-- HERO -->
+  <!-- Hero banner (atakule manzarası) -->
   <section class="hero-banner">
-    <!-- Atakule manzarası: kendi görselin -->
-    <img src="assets/banner.jpg"
-         alt="Ankara - Atakule manzarası"
-         onerror="this.style.display='none';document.getElementById('hero-fb').style.display='grid';" />
-    <!-- Görsel yüklenmezse fallback -->
-    <div id="hero-fb" class="overlay" style="display:none">
+    <img id="hero-img" src="assets/banner.jpg" alt="Ankara — Atakule"
+         onerror="this.hidden=true" />
+    <div class="overlay-fallback overlay">
       <div class="headline">Çayyolu’nun <b>Ödüllü</b> Danışmanı</div>
       <div class="subhead"><em>Güzel hayaller, doğru adımlarla gerçeğe dönüşür.</em></div>
     </div>
-    <!-- Başlık overlay -->
-    <div class="overlay" aria-hidden="true">
+    <div class="overlay">
       <div class="headline">Çayyolu’nun <b>Ödüllü</b> Danışmanı</div>
       <div class="subhead"><em>Güzel hayaller, doğru adımlarla gerçeğe dönüşür.</em></div>
     </div>
   </section>
 
-  <!-- HAKKINDA -->
+  <!-- Hakkımda -->
   <section id="hakkinda" class="intro section">
     <div class="intro-grid">
       <div class="intro-photo"><img src="assets/award.jpg" alt="Ödül" /></div>
@@ -167,7 +101,7 @@
     </div>
   </section>
 
-  <!-- PORTFÖY -->
+  <!-- Portföy -->
   <section id="portfoy" class="section">
     <h2>Portföy</h2>
 
@@ -180,14 +114,15 @@
       </select>
       <select id="f_rooms">
         <option value="">Oda</option>
-        <option>1+1</option><option>2+1</option><option>3+1</option><option>4+1</option><option>5+2</option>
+        <option>1+1</option><option>2+1</option><option>3+1</option>
+        <option>4+1</option><option>5+2</option>
       </select>
       <select id="f_sort">
         <option value="">Sırala</option>
-        <option value="price_desc">Fiyat (↓)</option>
-        <option value="price_asc">Fiyat (↑)</option>
-        <option value="m2_desc">m² (↓)</option>
-        <option value="m2_asc">m² (↑)</option>
+        <option value="price_asc">Fiyat (Artan)</option>
+        <option value="price_desc">Fiyat (Azalan)</option>
+        <option value="m2_desc">m² (Büyükten)</option>
+        <option value="m2_asc">m² (Küçükten)</option>
       </select>
     </div>
 
@@ -196,30 +131,29 @@
     <p id="csvErr" class="err" style="display:none"></p>
   </section>
 
-  <!-- ÖDÜLLER -->
-  <section id="oduller" class="section">
+  <!-- Ödüller (3×3) -->
+  <section id="awards" class="section">
     <h2>Ödüller</h2>
     <div class="awards-grid">
-      <!-- Resimleri assets/awards/ içine aynen bu adlarla veya yeni adlarla koyabilirsin -->
-      <div class="award"><img src="assets/awards/WhatsApp%20Image%202025-08-16%20at%2011.43.13.jpeg" alt="Ödül 1"></div>
-      <div class="award"><img src="assets/awards/WhatsApp%20Image%202025-08-16%20at%2011.43.29.jpeg" alt="Ödül 2"></div>
-      <div class="award"><img src="assets/awards/WhatsApp%20Image%202025-08-16%20at%2011.43.39.jpeg" alt="Ödül 3"></div>
-      <div class="award"><img src="assets/awards/WhatsApp%20Image%202025-08-16%20at%2011.43.49.jpeg" alt="Ödül 4"></div>
-      <div class="award"><img src="assets/awards/WhatsApp%20Image%202025-08-16%20at%2011.44.48.jpeg" alt="Ödül 5"></div>
-      <div class="award"><img src="assets/awards/WhatsApp%20Image%202025-08-16%20at%2011.45.24.jpeg" alt="Ödül 6"></div>
-      <div class="award"><img src="assets/awards/WhatsApp%20Image%202025-08-16%20at%2011.50.50.jpeg" alt="Ödül 7"></div>
-      <div class="award"><img src="assets/awards/WhatsApp%20Image%202025-08-16%20at%2011.54.55.jpeg" alt="Ödül 8"></div>
-      <div class="award"><img src="assets/awards/WhatsApp%20Image%202025-08-16%20at%2011.57.38.jpeg" alt="Ödül 9"></div>
+      <img src="assets/award1.jpeg" alt="Ödül 1" onerror="this.src='assets/no-image.jpg'">
+      <img src="assets/award2.jpeg" alt="Ödül 2" onerror="this.src='assets/no-image.jpg'">
+      <img src="assets/award3.jpeg" alt="Ödül 3" onerror="this.src='assets/no-image.jpg'">
+      <img src="assets/award4.jpeg" alt="Ödül 4" onerror="this.src='assets/no-image.jpg'">
+      <img src="assets/award5.jpeg" alt="Ödül 5" onerror="this.src='assets/no-image.jpg'">
+      <img src="assets/award6.jpeg" alt="Ödül 6" onerror="this.src='assets/no-image.jpg'">
+      <img src="assets/award7.jpeg" alt="Ödül 7" onerror="this.src='assets/no-image.jpg'">
+      <img src="assets/award8.jpeg" alt="Ödül 8" onerror="this.src='assets/no-image.jpg'">
+      <img src="assets/award9.jpeg" alt="Ödül 9" onerror="this.src='assets/no-image.jpg'">
     </div>
   </section>
 
-  <!-- YORUMLAR -->
+  <!-- Yorumlar -->
   <section id="yorumlar" class="section">
     <h2>Müşteri Yorumları</h2>
     <div id="twrap" class="twrap"></div>
   </section>
 
-  <!-- İLETİŞİM -->
+  <!-- İletişim -->
   <section id="iletisim" class="section">
     <h2>İletişim</h2>
     <div class="grid two">
@@ -232,155 +166,154 @@
         </ul>
       </div>
       <iframe class="map" loading="lazy"
-              src="https://www.google.com/maps?q=Dodurga,+Çınarcık+Sk+Ankarakent+Sit+D:2/1A,+06810+Çankaya/Ankara&output=embed">
-      </iframe>
+        src="https://www.google.com/maps?q=Dodurga,+Çınarcık+Sk+Ankarakent+Sit+D:2/1A,+06810+Çankaya/Ankara&output=embed"></iframe>
     </div>
   </section>
 
   <footer class="footer">© 2025 Pınar Yıldız • Çayyolu / Ankara</footer>
 
-  <!-- WhatsApp FLOAT -->
-  <a class="wa-float"
-     href="https://wa.me/905387026443?text=Merhaba%20P%C4%B1nar%20Han%C4%B1m,%20portf%C3%B6y%20hakk%C4%B1nda%20bilgi%20almak%20istiyorum."
-     target="_blank" rel="noopener" aria-label="WhatsApp ile yaz">
-    <!-- basit WhatsApp svg -->
-    <svg viewBox="0 0 32 32" fill="none" aria-hidden="true">
-      <path fill="#fff" d="M26.6 5.4A12.9 12.9 0 0 0 16 .8C7.7.8 1 7.5 1 15.8c0 2.8.8 5.5 2.3 7.8L1 31l7.6-2.2a15 15 0 0 0 7.4 2c8.3 0 15-6.7 15-15 0-4-1.6-7.7-4.4-10.4zM16 29.1c-2.4 0-4.7-.6-6.7-1.8l-.5-.3-4.5 1.3 1.3-4.4-.3-.5a12 12 0 1 1 10.8 5.7zm7-8.9c-.4-.2-2.4-1.1-2.8-1.2-.4-.1-.7-.2-1 .2-.3.3-1.1 1.2-1.3 1.4-.2.3-.5.3-.9.1-.4-.2-1.7-.6-3.1-2a11 11 0 0 1-2-3c-.2-.4 0-.6.1-.8l1-1.3c.2-.3.2-.5 0-.8-.1-.2-1-2.4-1.4-3.2-.4-.8-.7-.7-1-.7h-.8c-.3 0-.8.1-1.1.5-.4.4-1.4 1.4-1.4 3.4 0 2 1.4 3.9 1.6 4.2.2.3 2.8 4.3 6.9 6 1 .4 1.8.6 2.4.8.9.3 1.7.3 2.4.2.7-.1 2.4-1 2.7-2 .3-1 .3-1.8.2-2-.1-.2-.3-.3-.7-.5z"/>
-    </svg>
+  <!-- WhatsApp sabit buton -->
+  <a class="wa-fab" aria-label="WhatsApp" target="_blank"
+     href="https://wa.me/905387026443?text=Merhaba%20P%C4%B1nar%20Han%C4%B1m,%20portf%C3%B6y%20hakk%C4%B1nda%20bilgi%20almak%20istiyorum.">
+    <img alt="WhatsApp" src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/whatsapp.svg" />
   </a>
 
-  <!-- JS -->
-  <script>
-    /* SAAT */
-    function pad(n){return n<10?'0'+n:n}
-    function tick(){
-      const d=new Date();
-      document.getElementById('clock').textContent=pad(d.getHours())+':'+pad(d.getMinutes());
-      document.getElementById('date').textContent=pad(d.getDate())+'.'+pad(d.getMonth()+1)+'.'+d.getFullYear();
-    }
-    setInterval(tick,1000); tick();
+<script>
+/* ========== SAAT ========== */
+function pad(n){return n<10?'0'+n:n}
+function tick(){
+  const d=new Date();
+  document.getElementById('clock').textContent =
+    pad(d.getHours())+':'+pad(d.getMinutes());
+  document.getElementById('date').textContent =
+    pad(d.getDate())+'.'+pad(d.getMonth()+1)+'.'+d.getFullYear();
+}
+setInterval(tick,1000); tick();
 
-    /* KURLAR */
-    async function loadRates(){
-      const el=document.getElementById('rates');
-      async function tryOne(url,pick){
-        try{
-          const r=await fetch(url,{cache:'no-store'});
-          if(!r.ok) throw 0;
-          const j=await r.json();
-          const o=pick(j);
-          if(o){ el.textContent=`USD ₺ ${o.usd} • EUR ₺ ${o.eur} • GBP ₺ ${o.gbp}`; return true; }
-        }catch(e){}
-        return false;
+/* ========== KURLAR (3 kaynaktan dener) ========== */
+async function loadRates(){
+  const el=document.getElementById('rates');
+  async function tryOne(url, pick){
+    try{
+      const r=await fetch(url,{cache:'no-store'});
+      if(!r.ok) throw 0;
+      const j=await r.json();
+      const o=pick(j);
+      if(o){
+        el.textContent=`USD ₺ ${o.usd} • EUR ₺ ${o.eur} • GBP ₺ ${o.gbp}`;
+        return true;
       }
-      if(await tryOne('https://api.exchangerate.host/latest?base=TRY&symbols=USD,EUR,GBP',
-        j=> j&&j.rates?({usd:(1/j.rates.USD).toFixed(2),eur:(1/j.rates.EUR).toFixed(2),gbp:(1/j.rates.GBP).toFixed(2)}):null)) return;
-      if(await tryOne('https://open.er-api.com/v6/latest/TRY',
-        j=> j&&j.rates?({usd:(1/j.rates.USD).toFixed(2),eur:(1/j.rates.EUR).toFixed(2),gbp:(1/j.rates.GBP).toFixed(2)}):null)) return;
-      if(await tryOne('https://api.frankfurter.app/latest?from=TRY&to=USD,EUR,GBP',
-        j=> j&&j.rates?({usd:(1/j.rates.USD).toFixed(2),eur:(1/j.rates.EUR).toFixed(2),gbp:(1/j.rates.GBP).toFixed(2)}):null)) return;
-      el.textContent='Kurlar yüklenemedi';
-    }
-    loadRates(); setInterval(loadRates,300000);
+    }catch(_){}
+    return false;
+  }
+  if(await tryOne('https://api.exchangerate.host/latest?base=TRY&symbols=USD,EUR,GBP',
+    j=>j&&j.rates?({usd:(1/j.rates.USD).toFixed(2),eur:(1/j.rates.EUR).toFixed(2),gbp:(1/j.rates.GBP).toFixed(2)}):null)) return;
+  if(await tryOne('https://open.er-api.com/v6/latest/TRY',
+    j=>j&&j.rates?({usd:(1/j.rates.USD).toFixed(2),eur:(1/j.rates.EUR).toFixed(2),gbp:(1/j.rates.GBP).toFixed(2)}):null)) return;
+  if(await tryOne('https://api.frankfurter.app/latest?from=TRY&to=USD,EUR,GBP',
+    j=>j&&j.rates?({usd:(1/j.rates.USD).toFixed(2),eur:(1/j.rates.EUR).toFixed(2),gbp:(1/j.rates.GBP).toFixed(2)}):null)) return;
+  el.textContent='Kurlar yüklenemedi';
+}
+loadRates(); setInterval(loadRates, 300000);
 
-    /* CSV -> FUNCTION */
-    // Function endpoint: /.netlify/functions/portfolio  -> JSON döndürür
-    function normalizeHeader(h){
-      h=(h||'').trim().toLowerCase();
-      const map={
-        'başlık':'title','baslik':'title','title':'title',
-        'fiyat':'price','price':'price',
-        'semt':'district','district':'district',
-        'm2':'m2','metrekare':'m2',
-        'oda':'rooms','rooms':'rooms',
-        'durum':'status','status':'status',
-        'sahibinden link':'link','ilan linki':'link','link':'link',
-        'kapak fotograf':'image_url','kapak fotoğraf':'image_url','image_url':'image_url','görsel':'image_url','resim':'image_url',
-        'tarih':'updated_at','updated_at':'updated_at'
-      }; return map[h]||h;
-    }
+/* ========== YARDIMCI: string->number (fiyat, m2) ========== */
+function toNumber(v){
+  if(!v) return 0;
+  const s=String(v).replace(/[^\d.,]/g,'').replace(/\./g,'').replace(',', '.');
+  const n=parseFloat(s);
+  return isNaN(n)?0:n;
+}
 
-    function safeNum(x){
-      const s=String(x||'').replace(/[^\d]/g,''); return s?Number(s):0;
-    }
+/* ========== GÖRSEL ========== */
+function imgOf(it){
+  const u=(it.image_url||'').trim();
+  return (u && /^https?:\/\//i.test(u)) ? u : 'assets/no-image.jpg';
+}
 
-    function imgOf(it){
-      return (it.image_url && it.image_url.startsWith('http')) ? it.image_url : 'assets/no-image.jpg';
-    }
+/* ========== KART HTML ========== */
+function card(x){
+  const img = imgOf(x);
+  const href = (x.link && /^https?:\/\//i.test(x.link)) ? x.link : '#';
+  return `
+  <a class="card p hasimg" target="_blank" rel="noopener" href="${href}">
+    <img src="${img}" alt="${(x.title||'').replace(/"/g,'&quot;')}"
+         onerror="this.onerror=null;this.src='assets/no-image.jpg'">
+    <div class="pb">
+      <h3>${x.title||''}</h3>
+      <div class="meta">${x.district||''} • ${x.rooms||''} • ${x.m2||''} m²</div>
+      <div class="price">${x.price||''}</div>
+      <div class="small muted">Detaya gitmek için karta tıklayın • WhatsApp</div>
+    </div>
+  </a>`;
+}
 
-    function card(x){
-      const img=imgOf(x);
-      const href=(x.link&&x.link.startsWith('http'))?x.link:'#';
-      return `<a class="card" target="_blank" rel="noopener" href="${href}">
-        <img src="${img}" alt="${(x.title||'').replace(/"/g,'&quot;')}"
-             onerror="this.onerror=null;this.src='assets/no-image.jpg'">
-        <div class="pb">
-          <h3>${x.title||''}</h3>
-          <div class="meta">${x.district||''} • ${x.rooms||''} • ${x.m2||''} m²</div>
-          <div class="price">${x.price||''}</div>
-          <div class="small muted">Detaya gitmek için karta tıklayın</div>
-        </div>
-      </a>`;
-    }
+/* ========== FİLTRE + SIRALAMA ========== */
+function sortData(arr, key){
+  const a=[...arr];
+  switch(key){
+    case 'price_asc':  return a.sort((x,y)=>toNumber(x.price)-toNumber(y.price));
+    case 'price_desc': return a.sort((x,y)=>toNumber(y.price)-toNumber(x.price));
+    case 'm2_asc':     return a.sort((x,y)=>toNumber(x.m2)-toNumber(y.m2));
+    case 'm2_desc':    return a.sort((x,y)=>toNumber(y.m2)-toNumber(x.m2));
+    default: return a;
+  }
+}
 
-    function sortItems(arr, mode){
-      if(!mode) return arr;
-      const A=[...arr];
-      if(mode==='price_desc') return A.sort((a,b)=>safeNum(b.price)-safeNum(a.price));
-      if(mode==='price_asc')  return A.sort((a,b)=>safeNum(a.price)-safeNum(b.price));
-      if(mode==='m2_desc')    return A.sort((a,b)=>safeNum(b.m2)-safeNum(a.m2));
-      if(mode==='m2_asc')     return A.sort((a,b)=>safeNum(a.m2)-safeNum(b.m2));
-      return A;
-    }
+function render(data){
+  const q = document.getElementById('q').value.toLowerCase();
+  const st = document.getElementById('f_status').value;
+  const r  = document.getElementById('f_rooms').value;
+  const srt= document.getElementById('f_sort').value;
 
-    function render(data){
-      const q=document.getElementById('q').value.toLowerCase(),
-            st=document.getElementById('f_status').value,
-            r=document.getElementById('f_rooms').value,
-            sort=document.getElementById('f_sort').value;
+  let items = data.filter(x =>
+    (!q || String(x.title||'').toLowerCase().includes(q) ||
+           String(x.district||'').toLowerCase().includes(q))
+    && (!st || x.status===st)
+    && (!r || x.rooms===r)
+  );
+  items = sortData(items, srt);
 
-      let items=data.filter(x=>
-        (!q||String(x.title||'').toLowerCase().includes(q)||String(x.district||'').toLowerCase().includes(q))
-        &&(!st||x.status===st)&&(!r||x.rooms===r)
-      );
-      items = sortItems(items, sort);
+  document.getElementById('cards').innerHTML = items.map(card).join('');
+  document.getElementById('empty').style.display = items.length ? 'none' : 'block';
+}
 
-      document.getElementById('cards').innerHTML = items.map(card).join('');
-      document.getElementById('empty').style.display = items.length?'none':'block';
-    }
+/* ========== PORTFÖYÜ ÇEK ========== */
+async function loadAndRender(){
+  const e=document.getElementById('csvErr'); e.style.display='none';
+  try{
+    const res = await fetch('/.netlify/functions/portfolio',{cache:'no-store'});
+    if(!res.ok) throw new Error('HTTP '+res.status);
+    const data = await res.json();
+    window._DATA = Array.isArray(data) ? data : [];
+    render(window._DATA);
+  }catch(err){
+    e.textContent='Portföy yüklenemedi: '+err.message+' — Function/JSON yanıtını kontrol edin.';
+    e.style.display='block';
+  }
+}
+['q','f_status','f_rooms','f_sort'].forEach(id =>
+  document.getElementById(id).addEventListener('input',()=>render(window._DATA||[]))
+);
+loadAndRender(); setInterval(loadAndRender, 120000);
 
-    async function loadAndRender(){
-      const e=document.getElementById('csvErr'); e.style.display='none';
-      try{
-        const res = await fetch('/.netlify/functions/portfolio', {cache:'no-store'});
-        if(!res.ok) throw new Error('HTTP '+res.status);
-        const data = await res.json(); window._DATA=data; render(data);
-      }catch(err){
-        e.textContent='Portföy yüklenemedi: '+err.message+' — CSV yayın linkini kontrol edin (Dosya → Web’de yayımla → CSV).';
-        e.style.display='block';
-      }
-    }
-    ['q','f_status','f_rooms','f_sort'].forEach(id=>document.getElementById(id).addEventListener('input',()=>render(window._DATA||[])));
-    loadAndRender(); setInterval(loadAndRender,120000);
-
-    /* YORUMLAR */
-    const REVIEWS=[
-      {n:'Seda K.',t:'1 günde kiralık; süreç şeffaf ve çok profesyoneldi.',s:5},
-      {n:'Gökhan T.',t:'Doğru fiyat analiziyle 3 günde satış.',s:5},
-      {n:'Mehmet A.',t:'Çayyolu bölgesinde rakipsiz, kesinlikle tavsiye ederim.',s:5},
-      {n:'Ebru D.',t:'İlk görüşmeden tapuya kadar yanımızdaydı.',s:5},
-      {n:'Nur S.',t:'Kiralama 48 saatte tamamlandı.',s:5},
-      {n:'Tamer Y.',t:'İletişimi ve hızını çok beğendik.',s:5},
-      {n:'Selin B.',t:'Yatırım için en doğru seçenekleri sundu.',s:4},
-      {n:'Mert C.',t:'Fotoğraf ve ilan dili mükemmeldi.',s:5},
-      {n:'Gizem K.',t:'Süreç boyunca her adım bilgi verildi.',s:5},
-      {n:'Emre L.',t:'Bölgede ciddi portföy ağı var.',s:5},
-      {n:'Damla P.',t:'Kısa sürede kaliteli kiracı bulundu.',s:5},
-      {n:'Bora Z.',t:'Sonuç odaklı ve güven veriyor.',s:5}
-    ];
-    function star(n){return '★★★★★'.slice(0,n)}
-    document.getElementById('twrap').innerHTML=
-      REVIEWS.map(r=>`<div class="tcard"><div class="thead"><b>${r.n}</b><span class="src">Google</span></div><div class="stars">${star(r.s)}</div><div>${r.t}</div></div>`).join('');
-  </script>
+/* ========== YORUMLAR ========== */
+const REVIEWS=[
+  {n:'Seda K.',t:'1 günde kiralık; süreç şeffaf ve çok profesyoneldi.',s:5},
+  {n:'Gökhan T.',t:'Doğru fiyat analiziyle 3 günde satış.',s:5},
+  {n:'Mehmet A.',t:'Çayyolu bölgesinde rakipsiz, kesinlikle tavsiye ederim.',s:5},
+  {n:'Ebru D.',t:'İlk görüşmeden tapuya kadar yanımızdaydı.',s:5},
+  {n:'Nur S.',t:'Kiralama 48 saatte tamamlandı.',s:5},
+  {n:'Tamer Y.',t:'İletişimi ve hızını çok beğendik.',s:5},
+  {n:'Selin B.',t:'Yatırım için en doğru seçenekleri sundu.',s:4},
+  {n:'Mert C.',t:'Fotoğraf ve ilan dili mükemmeldi.',s:5},
+  {n:'Gizem K.',t:'Süreç boyunca her adım bilgi verildi.',s:5},
+  {n:'Emre L.',t:'Bölgede ciddi portföy ağı var.',s:5},
+  {n:'Damla P.',t:'Kısa sürede kaliteli kiracı bulundu.',s:5},
+  {n:'Bora Z.',t:'Sonuç odaklı ve güven veriyor.',s:5}
+];
+function star(n){return '★★★★★'.slice(0,n)}
+document.getElementById('twrap').innerHTML =
+  REVIEWS.map(r=>`<div class="tcard"><div class="thead"><b>${r.n}</b><span class="src">Google</span></div><div class="stars">${star(r.s)}</div><div>${r.t}</div></div>`).join('');
+</script>
 </body>
 </html>
