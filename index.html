@@ -1,397 +1,386 @@
 <!doctype html>
 <html lang="tr">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Pınar Yıldız | Çayyolu Ankara</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet" />
-<style>
-:root{
-  --bg:#0b1220; --bg-soft:#0f1a2d; --card:#0f1a2d; --muted:#9fb1cc; --text:#e8f0ff;
-  --primary:#22c55e; --primary2:#2dd4bf; --accent:#60a5fa; --danger:#ff5a66;
-  --radius:18px; --shadow:0 10px 30px rgba(0,0,0,.35);
-}
-*{box-sizing:border-box}
-html,body{height:100%}
-body{
-  margin:0; font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial;
-  background:linear-gradient(120deg,#08101e,#0b1220 40%,#0a1426);
-  color:var(--text); line-height:1.55;
-}
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Pınar Yıldız | Çayyolu Ankara</title>
 
-/* Topbar */
-.topbar{
-  display:flex; justify-content:space-between; align-items:center;
-  padding:6px 14px; font-size:12px; color:var(--muted); border-bottom:1px solid rgba(255,255,255,.06);
-}
-.topbar .dt{opacity:.9}
-#rates{white-space:nowrap;}
+  <!-- Yazı tipi -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet" />
 
-/* Header / nav */
-.nav{max-width:1200px;margin:10px auto 0;display:flex;align-items:center;justify-content:space-between;padding:10px 14px 0}
-.brand{display:flex;gap:10px;align-items:center}
-.brand .dot{width:36px;height:36px;border-radius:50%;display:grid;place-content:center;background:linear-gradient(135deg,var(--primary2),var(--primary));font-weight:800;color:#05121d}
-.brand .txt{display:flex;flex-direction:column}
-.brand .txt b{font-size:14px}
-.brand .txt span{font-size:12px;color:var(--muted)}
-.nav nav a{color:var(--muted);margin-left:18px;text-decoration:none}
-.nav nav a.btn{background:var(--primary);color:#041018;padding:8px 14px;border-radius:10px;font-weight:700}
+  <!-- Mevcut sitenin stilleri -->
+  <link rel="stylesheet" href="styles.css" />
 
-/* HERO */
-.hero-banner{
-  position: relative; max-width:1200px; margin:18px auto 28px;
-  border-radius:22px; overflow:hidden; aspect-ratio:21/9;
-  background:#0b1428; box-shadow:var(--shadow);
-}
-.hero-banner img{width:100%;height:100%;object-fit:cover;filter:brightness(.9) saturate(1.08);display:block}
-.hero-overlay{
-  position:absolute; inset:0; display:grid; place-content:center; text-align:center; gap:10px;
-  padding:0 24px; color:#e9eef7; background:linear-gradient(180deg,rgba(0,0,0,.00) 0%, rgba(0,0,0,.35) 65%);
-}
-.hero-overlay .headline{font-weight:800; font-size:clamp(26px,3.4vw,46px); letter-spacing:.2px}
-.hero-overlay .headline b{background:linear-gradient(135deg,var(--primary2),var(--primary));-webkit-background-clip:text;background-clip:text;color:transparent}
-.hero-overlay .subhead{font-size:clamp(14px,1.6vw,18px); opacity:.95}
-@media (max-width:640px){ .hero-banner{border-radius:16px;margin:12px 18px 20px} }
+  <!-- Bu sayfaya özel küçük dokunuşlar -->
+  <style>
+    :root{
+      --radius: 16px;
+      --muted:#8a8f98;
+      --card-bg: #ffffff0d; /* dark modla da uyumlu hafif transparan */
+      --shadow: 0 10px 30px rgba(0,0,0,.15);
+      --brand:#2ad163; /* WhatsApp */
+      --accent:#ef4444; /* fiyat rengi */
+    }
 
-/* Sections */
-.section{max-width:1200px;margin:0 auto;padding:8px 14px 24px}
-h2{margin:10px 0 14px}
-.muted{color:var(--muted)}
+    /* Top bar */
+    .topbar{position:sticky;top:0;z-index:50}
 
-/* Intro */
-.intro-grid{display:grid;grid-template-columns:340px 1fr;gap:28px;align-items:center}
-.intro-photo img{width:100%;border-radius:14px;box-shadow:var(--shadow)}
-.bullets{margin:12px 0 10px;padding-left:18px}
-.bullets li{margin:6px 0}
-.vision{margin-top:8px;color:#cfe2ff}
-.socials{display:flex;gap:14px;margin-top:10px}
-.socials a{text-decoration:none;color:#cfe2ff}
+    /* HERO */
+    .hero-banner{position:relative; overflow:hidden}
+    .hero-banner>img{
+      width:100%; height:380px; object-fit:cover; display:block;
+      filter: saturate(1.05) contrast(1.05);
+    }
+    .hero-banner .overlay{
+      position:absolute; inset:0;
+      display:grid; place-content:center;
+      text-align:center; color:#fff;
+      background: linear-gradient(to bottom, rgba(0,0,0,.25), rgba(0,0,0,.45));
+    }
+    .hero-banner .headline{font-size:clamp(24px,4vw,42px); font-weight:800; letter-spacing:.2px}
+    .hero-banner .subhead{margin-top:8px; opacity:.95}
 
-/* Filters */
-.filters{display:flex;gap:10px;align-items:center;margin:6px 0 8px}
-.filters input,.filters select{
-  background:var(--bg-soft); color:var(--text); border:1px solid rgba(255,255,255,.06);
-  padding:10px 12px;border-radius:12px; outline:none; min-width:140px
-}
-.filters input{flex:1}
+    /* PORTFÖY KARTLARI */
+    .grid.three{display:grid; gap:22px; grid-template-columns:repeat(3,minmax(0,1fr))}
+    @media (max-width:1100px){ .grid.three{grid-template-columns:repeat(2,minmax(0,1fr))} }
+    @media (max-width:700px){ .grid.three{grid-template-columns:1fr} }
 
-/* Cards grid */
-.grid{display:grid;gap:16px}
-.grid.three{grid-template-columns:repeat(3,minmax(0,1fr))}
-@media (max-width:1100px){ .grid.three{grid-template-columns:repeat(2,minmax(0,1fr))} }
-@media (max-width:680px){ .grid.three{grid-template-columns:1fr} }
+    .card{
+      background:var(--card-bg);
+      border-radius:var(--radius);
+      overflow:hidden;
+      box-shadow: var(--shadow);
+      display:flex; flex-direction:column;
+      transition: transform .18s ease, box-shadow .18s ease;
+    }
+    .card:hover{ transform: translateY(-3px); box-shadow:0 18px 40px rgba(0,0,0,.18) }
+    .card>img{
+      width:100%; aspect-ratio: 16/9; object-fit:cover; background:#0f1520;
+      display:block;
+    }
+    .card .pb{ padding:16px 18px 18px }
+    .card h3{ margin:0 0 6px 0; font-size:18px }
+    .card .meta{ color:var(--muted); font-size:13px; margin-bottom:8px }
+    .card .price{ color:var(--accent); font-size:20px; font-weight:800 }
+    .card .small{ font-size:12px; margin-top:8px; color:var(--muted)}
 
-/* Card */
-.card{
-  display:flex;flex-direction:column; border-radius:16px; overflow:hidden; text-decoration:none; color:var(--text);
-  background:var(--card); border:1px solid rgba(255,255,255,.06); box-shadow:0 8px 24px rgba(2,12,26,.4);
-}
-.thumb{position:relative;aspect-ratio:16/9;background:#0e1729}
-.thumb img{width:100%;height:100%;object-fit:cover;display:block}
-.pb{padding:12px 14px 14px}
-.card h3{margin:2px 0 6px}
-.meta{font-size:13px;color:var(--muted)}
-.price{color:#ffd1d4;font-weight:800;margin:8px 0 6px;font-size:18px}
-.small{font-size:12px;color:var(--muted)}
+    /* ÖDÜLLER */
+    .awards-grid{
+      display:grid; gap:16px;
+      grid-template-columns:repeat(3, minmax(0,1fr));
+    }
+    @media (max-width:1000px){ .awards-grid{ grid-template-columns:repeat(2,1fr)} }
+    @media (max-width:640px){ .awards-grid{ grid-template-columns:1fr } }
 
-/* Awards / Reviews */
-.badges{display:flex;flex-wrap:wrap;gap:10px}
-.badges span{background:var(--bg-soft);padding:8px 10px;border-radius:10px;border:1px solid rgba(255,255,255,.06)}
-.twrap{display:grid;gap:12px;grid-template-columns:repeat(3,minmax(0,1fr))}
-.tcard{background:var(--bg-soft);border:1px solid rgba(255,255,255,.06);border-radius:12px;padding:12px}
-.thead{display:flex;justify-content:space-between}
-.stars{color:#ffd166}
-@media (max-width:960px){.twrap{grid-template-columns:1fr 1fr}}
-@media (max-width:640px){.twrap{grid-template-columns:1fr}}
+    .award{
+      background:var(--card-bg);
+      border-radius: var(--radius);
+      overflow:hidden;
+      box-shadow: var(--shadow);
+    }
+    .award img{
+      width:100%; height:100%; display:block; object-fit:cover;
+      aspect-ratio: 1 / 1; /* kare kırp */
+      background:#0f1520;
+    }
 
-/* Contact */
-.grid.two{display:grid;grid-template-columns:1fr 1fr;gap:16px}
-.map{width:100%;aspect-ratio:16/9;border:0;border-radius:14px}
-.contact li{margin:6px 0}
+    /* WhatsApp sabit buton */
+    .wa-float{
+      position:fixed; right:18px; bottom:18px; z-index:80;
+      width:58px; height:58px; border-radius:50%;
+      display:grid; place-items:center; background:var(--brand);
+      color:#fff; box-shadow:0 10px 28px rgba(42,209,99,.55);
+      transition:transform .15s ease;
+    }
+    .wa-float:hover{ transform: scale(1.06) }
+    .wa-float svg{ width:28px; height:28px; display:block }
 
-/* Footer */
-.footer{max-width:1200px;margin:0 auto 40px;color:var(--muted);padding:20px 14px;border-top:1px solid rgba(255,255,255,.06)}
-
-/* Floating WhatsApp */
-.fab-wa{
-  position:fixed; right:18px; bottom:18px; z-index:7000; width:56px; height:56px;
-  border-radius:50%; display:grid; place-content:center; background:#25d366; color:#052012;
-  text-decoration:none; box-shadow:0 14px 30px rgba(0,0,0,.35); font-weight:800;
-}
-.fab-wa:hover{transform:translateY(-2px)}
-</style>
+    /* Hata / boş durum mesajları */
+    .err{color:#ef4444; background:#ef444422; padding:10px 12px; border-radius:10px}
+    .muted{color:var(--muted)}
+  </style>
 </head>
+
 <body>
-
-<!-- Top bar -->
-<div class="topbar">
-  <div class="dt"><span id="clock">--:--</span> • <span id="date">--.--.----</span></div>
-  <div id="rates">USD • EUR • GBP</div>
-</div>
-
-<!-- Header -->
-<header class="nav">
-  <div class="brand">
-    <div class="dot">PY</div>
-    <div class="txt"><b>Pınar Yıldız</b><span>Çayyolu • Ankara</span></div>
+  <!-- Üst bar -->
+  <div class="topbar">
+    <div class="dt">
+      <span id="clock">--:--</span>
+      <span id="date">--.--.----</span>
+    </div>
+    <div id="rates">USD • EUR • GBP</div>
   </div>
-  <nav>
-    <a href="#portfoy">Portföy</a>
-    <a href="#hakkinda">Hakkımda</a>
-    <a href="#oduller">Ödüller</a>
-    <a href="#yorumlar">Yorumlar</a>
-    <a class="btn" href="#iletisim">İletişim</a>
-  </nav>
-</header>
 
-<!-- HERO Banner -->
-<section class="hero-banner" id="hero">
-  <img src="assets/banner.jpg" alt="Çayyolu - Atakule"
-       onerror="this.style.display='none';document.getElementById('hero-fallback').style.display='grid'">
-  <div class="hero-overlay">
-    <div class="headline">Çayyolu’nun <b>Ödüllü</b> Danışmanı</div>
-    <div class="subhead"><em>Güzel hayaller, doğru adımlarla gerçeğe dönüşür.</em></div>
-  </div>
-  <div id="hero-fallback" class="hero-overlay" style="display:none">
-    <div class="headline">Çayyolu’nun <b>Ödüllü</b> Danışmanı</div>
-    <div class="subhead"><em>Güzel hayaller, doğru adımlarla gerçeğe dönüşür.</em></div>
-  </div>
-</section>
+  <!-- NAV -->
+  <header class="nav">
+    <div class="brand">
+      <div class="dot">PY</div>
+      <div class="txt"><b>Pınar Yıldız</b><span>Çayyolu • Ankara</span></div>
+    </div>
+    <nav>
+      <a href="#portfoy">Portföy</a>
+      <a href="#hakkinda">Hakkımda</a>
+      <a href="#oduller">Ödüller</a>
+      <a href="#yorumlar">Yorumlar</a>
+      <a class="btn" href="#iletisim">İletişim</a>
+    </nav>
+  </header>
 
-<!-- Intro -->
-<section id="hakkinda" class="intro section">
-  <div class="intro-grid">
-    <div class="intro-photo"><img src="assets/award.jpg" alt="Ödül"></div>
-    <div class="intro-copy">
-      <h1><span class="muted">Gayrimenkul Profesyoneli</span><br><strong>Pınar YILDIZ</strong></h1>
-      <ul class="bullets">
-        <li>📍 RE/MAX Su 2024 Ciro & Portföy Birincisi</li>
-        <li>🏆 Müşteri Memnuniyeti Ödülü Sahibi</li>
-        <li>⏱ 1 günde kiralama • 48 saatte satış</li>
-        <li>📊 3 yıllık tecrübe; Çayyolu bölge uzmanı</li>
-        <li>🎓 Maliye mezunu</li>
-      </ul>
-      <p class="vision">“Evleri değil; insanların hayatına dokunan hikâyeleri satıyorum.”</p>
-      <div class="socials">
-        <a target="_blank" href="https://www.instagram.com/remaxsupinar">📸 Instagram</a>
-        <a target="_blank" href="https://www.linkedin.com/in/p%C4%B1nar-y%C4%B1ld%C4%B1z-4ab33a333">in LinkedIn</a>
-        <a target="_blank" href="https://wa.me/905387026443">💬 WhatsApp</a>
+  <!-- HERO -->
+  <section class="hero-banner">
+    <!-- Atakule manzarası: kendi görselin -->
+    <img src="assets/banner.jpg"
+         alt="Ankara - Atakule manzarası"
+         onerror="this.style.display='none';document.getElementById('hero-fb').style.display='grid';" />
+    <!-- Görsel yüklenmezse fallback -->
+    <div id="hero-fb" class="overlay" style="display:none">
+      <div class="headline">Çayyolu’nun <b>Ödüllü</b> Danışmanı</div>
+      <div class="subhead"><em>Güzel hayaller, doğru adımlarla gerçeğe dönüşür.</em></div>
+    </div>
+    <!-- Başlık overlay -->
+    <div class="overlay" aria-hidden="true">
+      <div class="headline">Çayyolu’nun <b>Ödüllü</b> Danışmanı</div>
+      <div class="subhead"><em>Güzel hayaller, doğru adımlarla gerçeğe dönüşür.</em></div>
+    </div>
+  </section>
+
+  <!-- HAKKINDA -->
+  <section id="hakkinda" class="intro section">
+    <div class="intro-grid">
+      <div class="intro-photo"><img src="assets/award.jpg" alt="Ödül" /></div>
+      <div class="intro-copy">
+        <h1><span class="muted">Gayrimenkul Profesyoneli</span><br /><strong>Pınar YILDIZ</strong></h1>
+        <ul class="bullets">
+          <li>📍 RE/MAX Su 2024 Ciro & Portföy Birincisi</li>
+          <li>🏆 Müşteri Memnuniyeti Ödülü Sahibi</li>
+          <li>⏱ 1 günde kiralama • 48 saatte satış</li>
+          <li>📊 3 yıllık tecrübe; Çayyolu bölge uzmanı</li>
+          <li>🎓 Maliye mezunu</li>
+        </ul>
+        <p class="vision">“Evleri değil; insanların hayatına dokunan hikâyeleri satıyorum.”</p>
+        <div class="socials">
+          <a target="_blank" href="https://www.instagram.com/remaxsupinar">📸 Instagram</a>
+          <a target="_blank" href="https://www.linkedin.com/in/p%C4%B1nar-y%C4%B1ld%C4%B1z-4ab33a333">in LinkedIn</a>
+          <a target="_blank" href="https://wa.me/905387026443">💬 WhatsApp</a>
+        </div>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- Portföy -->
-<section id="portfoy" class="section">
-  <h2>Portföy</h2>
-  <div class="filters">
-    <input id="q" placeholder="Arama: başlık, semt…">
-    <select id="f_status">
-      <option value="">Durum</option><option>Satılık</option><option>Kiralık</option>
-    </select>
-    <select id="f_rooms">
-      <option value="">Oda</option><option>1+1</option><option>2+1</option><option>3+1</option>
-      <option>4+1</option><option>5+2</option>
-    </select>
-    <select id="sort">
-      <option value="none">Sırala</option>
-      <option value="price_desc">Fiyat (yüksek → düşük)</option>
-      <option value="price_asc">Fiyat (düşük → yüksek)</option>
-      <option value="m2_desc">m² (büyük → küçük)</option>
-      <option value="m2_asc">m² (küçük → büyük)</option>
-    </select>
-  </div>
+  <!-- PORTFÖY -->
+  <section id="portfoy" class="section">
+    <h2>Portföy</h2>
 
-  <div id="cards" class="grid three"></div>
-  <p id="empty" class="muted" style="display:none">Kriterlere uyan portföy bulunamadı.</p>
-  <p id="csvErr" class="muted" style="display:none;color:#ff9aa2"></p>
-</section>
-
-<!-- Ödüller -->
-<section id="oduller" class="section">
-  <h2>Ödüller</h2>
-  <div class="badges">
-    <span>2024 Yıldızlar Kulübü</span><span>RE/MAX Su – İşlem Birincisi</span>
-    <span>RE/MAX Su – Ciro Birincisi</span><span>RE/MAX Su – Portföy Birincisi</span>
-    <span>RE/MAX Su – Müşteri Memnuniyeti Birincisi</span>
-    <span>2025 Q1&Q2 Müşteri Memnuniyeti</span><span>2025 Q1&Q2 İşlem</span>
-    <span>2025 Q1&Q2 Ciro</span><span>2025 Haziran – 3. Bölge Müşteri Memnuniyeti</span>
-  </div>
-</section>
-
-<!-- Yorumlar -->
-<section id="yorumlar" class="section">
-  <h2>Müşteri Yorumları</h2>
-  <div id="twrap" class="twrap"></div>
-</section>
-
-<!-- İletişim -->
-<section id="iletisim" class="section">
-  <h2>İletişim</h2>
-  <div class="grid two">
-    <div>
-      <ul class="contact">
-        <li>📍 Dodurga, Çınarcık Sk Ankarakent Sit D:2/1A, 06810 Çankaya/Ankara</li>
-        <li>☎️ (0312) 236 83 83</li>
-        <li>📱 <a href="tel:+905387026443" style="color:#cfe2ff">0538 702 64 43</a></li>
-        <li>📧 <a href="mailto:pinary@remax-su-ank.com" style="color:#cfe2ff">pinary@remax-su-ank.com</a></li>
-      </ul>
+    <div class="filters">
+      <input id="q" placeholder="Arama: başlık, semt…" />
+      <select id="f_status">
+        <option value="">Durum</option>
+        <option>Satılık</option>
+        <option>Kiralık</option>
+      </select>
+      <select id="f_rooms">
+        <option value="">Oda</option>
+        <option>1+1</option><option>2+1</option><option>3+1</option><option>4+1</option><option>5+2</option>
+      </select>
+      <select id="f_sort">
+        <option value="">Sırala</option>
+        <option value="price_desc">Fiyat (↓)</option>
+        <option value="price_asc">Fiyat (↑)</option>
+        <option value="m2_desc">m² (↓)</option>
+        <option value="m2_asc">m² (↑)</option>
+      </select>
     </div>
-    <iframe class="map" loading="lazy"
-      src="https://www.google.com/maps?q=Dodurga,+Çınarcık+Sk+Ankarakent+Sit+D:2/1A,+06810+Çankaya/Ankara&output=embed"></iframe>
-  </div>
-</section>
 
-<footer class="footer">© 2025 Pınar Yıldız • Çayyolu / Ankara</footer>
+    <div id="cards" class="grid three"></div>
+    <p id="empty" class="muted" style="display:none">Kriterlere uyan portföy bulunamadı.</p>
+    <p id="csvErr" class="err" style="display:none"></p>
+  </section>
 
-<!-- Floating WhatsApp -->
-<a class="fab-wa" target="_blank"
-   href="https://wa.me/905387026443?text=Merhaba%20P%C4%B1nar%20Han%C4%B1m,%20web%20sitenizden%20yaz%C4%B1yorum.">WA</a>
-
-<script>
-/* ====== Saat & Tarih ====== */
-function pad(n){return n<10?'0'+n:n}
-function tick(){
-  const d=new Date();
-  document.getElementById('clock').textContent = pad(d.getHours())+':'+pad(d.getMinutes());
-  document.getElementById('date').textContent = pad(d.getDate())+'.'+pad(d.getMonth()+1)+'.'+d.getFullYear();
-}
-tick(); setInterval(tick, 1000);
-
-/* ====== Kur Yükleyici (3 fallback) ====== */
-async function loadRates(){
-  const el=document.getElementById('rates');
-  async function tryOne(url, pick){
-    try{
-      const r=await fetch(url,{cache:'no-store'}); if(!r.ok) throw 0;
-      const j=await r.json(); const o=pick(j);
-      if(o){ el.textContent=`USD ₺ ${o.usd} • EUR ₺ ${o.eur} • GBP ₺ ${o.gbp}`; return true; }
-    }catch(_){ }
-    return false;
-  }
-  if(await tryOne('https://api.exchangerate.host/latest?base=TRY&symbols=USD,EUR,GBP', j=>j?.rates?({usd:(1/j.rates.USD).toFixed(2),eur:(1/j.rates.EUR).toFixed(2),gbp:(1/j.rates.GBP).toFixed(2)}):null)) return;
-  if(await tryOne('https://open.er-api.com/v6/latest/TRY', j=>j?.rates?({usd:(1/j.rates.USD).toFixed(2),eur:(1/j.rates.EUR).toFixed(2),gbp:(1/j.rates.GBP).toFixed(2)}):null)) return;
-  if(await tryOne('https://api.frankfurter.app/latest?from=TRY&to=USD,EUR,GBP', j=>j?.rates?({usd:(1/j.rates.USD).toFixed(2),eur:(1/j.rates.EUR).toFixed(2),gbp:(1/j.rates.GBP).toFixed(2)}):null)) return;
-  el.textContent='Kurlar yüklenemedi';
-}
-loadRates(); setInterval(loadRates, 300000);
-
-/* ====== Portföy ====== */
-const EL = {
-  cards: document.getElementById('cards'),
-  empty: document.getElementById('empty'),
-  err: document.getElementById('csvErr'),
-  q: document.getElementById('q'),
-  st: document.getElementById('f_status'),
-  rm: document.getElementById('f_rooms'),
-  sort: document.getElementById('sort')
-};
-window._DATA=[];
-
-/* Imgbb / BBCode / doğrudan link çözümü */
-function extractImage(u){
-  if(!u) return '';
-  u = (''+u).trim();
-  let m = u.match(/\[img\](.*?)\[\/img\]/i);
-  if(m && m[1]) return m[1];
-  m = u.match(/(https?:\/\/i\.ibb\.co\/[^\s\]]+\.(?:jpg|jpeg|png|webp|gif))/i);
-  if(m) return m[1];
-  if(/\.(jpg|jpeg|png|webp|gif)$/i.test(u)) return u;
-  return '';
-}
-function imgOf(it){
-  const url = extractImage(it.image_url);
-  return url || 'assets/no-image.jpg';
-}
-function num(x){ if(x==null) return 0; const s=(''+x).toString().replaceAll('.','').replace(',','.'); const n=parseFloat(s); return isNaN(n)?0:n; }
-
-/* Card HTML */
-function card(x){
-  const img=imgOf(x);
-  const href=(x.link&&x.link.startsWith('http'))?x.link:'#';
-  const m2 = x.m2 || x['m²'] || '';
-  return `<a class="card" target="_blank" rel="noopener" href="${href}">
-    <div class="thumb"><img src="${img}" alt="${(x.title||'')}" onerror="this.onerror=null;this.src='assets/no-image.jpg'"></div>
-    <div class="pb">
-      <h3>${x.title||''}</h3>
-      <div class="meta">${x.district||''} • ${x.rooms||''} • ${m2?m2+' m²':''}</div>
-      <div class="price">${x.price||''}</div>
-      <div class="small">Detaya gitmek için karta tıklayın • WhatsApp</div>
+  <!-- ÖDÜLLER -->
+  <section id="oduller" class="section">
+    <h2>Ödüller</h2>
+    <div class="awards-grid">
+      <!-- Resimleri assets/awards/ içine aynen bu adlarla veya yeni adlarla koyabilirsin -->
+      <div class="award"><img src="assets/awards/WhatsApp%20Image%202025-08-16%20at%2011.43.13.jpeg" alt="Ödül 1"></div>
+      <div class="award"><img src="assets/awards/WhatsApp%20Image%202025-08-16%20at%2011.43.29.jpeg" alt="Ödül 2"></div>
+      <div class="award"><img src="assets/awards/WhatsApp%20Image%202025-08-16%20at%2011.43.39.jpeg" alt="Ödül 3"></div>
+      <div class="award"><img src="assets/awards/WhatsApp%20Image%202025-08-16%20at%2011.43.49.jpeg" alt="Ödül 4"></div>
+      <div class="award"><img src="assets/awards/WhatsApp%20Image%202025-08-16%20at%2011.44.48.jpeg" alt="Ödül 5"></div>
+      <div class="award"><img src="assets/awards/WhatsApp%20Image%202025-08-16%20at%2011.45.24.jpeg" alt="Ödül 6"></div>
+      <div class="award"><img src="assets/awards/WhatsApp%20Image%202025-08-16%20at%2011.50.50.jpeg" alt="Ödül 7"></div>
+      <div class="award"><img src="assets/awards/WhatsApp%20Image%202025-08-16%20at%2011.54.55.jpeg" alt="Ödül 8"></div>
+      <div class="award"><img src="assets/awards/WhatsApp%20Image%202025-08-16%20at%2011.57.38.jpeg" alt="Ödül 9"></div>
     </div>
-  </a>`;
-}
+  </section>
 
-/* Filtre + Sıralama + Render */
-function render(data){
-  const q = EL.q.value.trim().toLowerCase();
-  const st = EL.st.value;
-  const rm = EL.rm.value;
-  const sort = EL.sort.value;
+  <!-- YORUMLAR -->
+  <section id="yorumlar" class="section">
+    <h2>Müşteri Yorumları</h2>
+    <div id="twrap" class="twrap"></div>
+  </section>
 
-  let items = data.filter(x=>{
-    const okQ = !q || (String(x.title||'').toLowerCase().includes(q) || String(x.district||'').toLowerCase().includes(q));
-    const okS = !st || (x.status===st);
-    const okR = !rm || (x.rooms===rm);
-    return okQ && okS && okR;
-  });
+  <!-- İLETİŞİM -->
+  <section id="iletisim" class="section">
+    <h2>İletişim</h2>
+    <div class="grid two">
+      <div>
+        <ul class="contact">
+          <li>📍 Dodurga, Çınarcık Sk Ankarakent Sit D:2/1A, 06810 Çankaya/Ankara</li>
+          <li>☎️ (0312) 236 83 83</li>
+          <li>📱 <a href="tel:+905387026443">0538 702 64 43</a></li>
+          <li>📧 <a href="mailto:pinary@remax-su-ank.com">pinary@remax-su-ank.com</a></li>
+        </ul>
+      </div>
+      <iframe class="map" loading="lazy"
+              src="https://www.google.com/maps?q=Dodurga,+Çınarcık+Sk+Ankarakent+Sit+D:2/1A,+06810+Çankaya/Ankara&output=embed">
+      </iframe>
+    </div>
+  </section>
 
-  // sort
-  items = items.map(it=>({
-    ...it,
-    _price: it.price_num!=null ? Number(it.price_num) : num(it.price),
-    _m2: num(it.m2 || it['m²'])
-  }));
-  if(sort==='price_desc') items.sort((a,b)=>b._price-a._price);
-  if(sort==='price_asc')  items.sort((a,b)=>a._price-b._price);
-  if(sort==='m2_desc')    items.sort((a,b)=>b._m2-a._m2);
-  if(sort==='m2_asc')     items.sort((a,b)=>a._m2-b._m2);
+  <footer class="footer">© 2025 Pınar Yıldız • Çayyolu / Ankara</footer>
 
-  EL.cards.innerHTML = items.map(card).join('');
-  EL.empty.style.display = items.length?'none':'block';
-}
+  <!-- WhatsApp FLOAT -->
+  <a class="wa-float"
+     href="https://wa.me/905387026443?text=Merhaba%20P%C4%B1nar%20Han%C4%B1m,%20portf%C3%B6y%20hakk%C4%B1nda%20bilgi%20almak%20istiyorum."
+     target="_blank" rel="noopener" aria-label="WhatsApp ile yaz">
+    <!-- basit WhatsApp svg -->
+    <svg viewBox="0 0 32 32" fill="none" aria-hidden="true">
+      <path fill="#fff" d="M26.6 5.4A12.9 12.9 0 0 0 16 .8C7.7.8 1 7.5 1 15.8c0 2.8.8 5.5 2.3 7.8L1 31l7.6-2.2a15 15 0 0 0 7.4 2c8.3 0 15-6.7 15-15 0-4-1.6-7.7-4.4-10.4zM16 29.1c-2.4 0-4.7-.6-6.7-1.8l-.5-.3-4.5 1.3 1.3-4.4-.3-.5a12 12 0 1 1 10.8 5.7zm7-8.9c-.4-.2-2.4-1.1-2.8-1.2-.4-.1-.7-.2-1 .2-.3.3-1.1 1.2-1.3 1.4-.2.3-.5.3-.9.1-.4-.2-1.7-.6-3.1-2a11 11 0 0 1-2-3c-.2-.4 0-.6.1-.8l1-1.3c.2-.3.2-.5 0-.8-.1-.2-1-2.4-1.4-3.2-.4-.8-.7-.7-1-.7h-.8c-.3 0-.8.1-1.1.5-.4.4-1.4 1.4-1.4 3.4 0 2 1.4 3.9 1.6 4.2.2.3 2.8 4.3 6.9 6 1 .4 1.8.6 2.4.8.9.3 1.7.3 2.4.2.7-.1 2.4-1 2.7-2 .3-1 .3-1.8.2-2-.1-.2-.3-.3-.7-.5z"/>
+    </svg>
+  </a>
 
-/* Data yükle */
-async function loadAndRender(){
-  EL.err.style.display='none';
-  try{
-    const res = await fetch('/.netlify/functions/portfolio', {cache:'no-store'});
-    if(!res.ok) throw new Error('HTTP '+res.status);
-    const data = await res.json();
-    window._DATA = Array.isArray(data)?data:[];
+  <!-- JS -->
+  <script>
+    /* SAAT */
+    function pad(n){return n<10?'0'+n:n}
+    function tick(){
+      const d=new Date();
+      document.getElementById('clock').textContent=pad(d.getHours())+':'+pad(d.getMinutes());
+      document.getElementById('date').textContent=pad(d.getDate())+'.'+pad(d.getMonth()+1)+'.'+d.getFullYear();
+    }
+    setInterval(tick,1000); tick();
 
-    // normalize bazı alanlar
-    window._DATA.forEach(d=>{
-      if(d.price_num==null) d.price_num = num(d.price);
-      if(!d.image_url) d.image_url = '';
-    });
+    /* KURLAR */
+    async function loadRates(){
+      const el=document.getElementById('rates');
+      async function tryOne(url,pick){
+        try{
+          const r=await fetch(url,{cache:'no-store'});
+          if(!r.ok) throw 0;
+          const j=await r.json();
+          const o=pick(j);
+          if(o){ el.textContent=`USD ₺ ${o.usd} • EUR ₺ ${o.eur} • GBP ₺ ${o.gbp}`; return true; }
+        }catch(e){}
+        return false;
+      }
+      if(await tryOne('https://api.exchangerate.host/latest?base=TRY&symbols=USD,EUR,GBP',
+        j=> j&&j.rates?({usd:(1/j.rates.USD).toFixed(2),eur:(1/j.rates.EUR).toFixed(2),gbp:(1/j.rates.GBP).toFixed(2)}):null)) return;
+      if(await tryOne('https://open.er-api.com/v6/latest/TRY',
+        j=> j&&j.rates?({usd:(1/j.rates.USD).toFixed(2),eur:(1/j.rates.EUR).toFixed(2),gbp:(1/j.rates.GBP).toFixed(2)}):null)) return;
+      if(await tryOne('https://api.frankfurter.app/latest?from=TRY&to=USD,EUR,GBP',
+        j=> j&&j.rates?({usd:(1/j.rates.USD).toFixed(2),eur:(1/j.rates.EUR).toFixed(2),gbp:(1/j.rates.GBP).toFixed(2)}):null)) return;
+      el.textContent='Kurlar yüklenemedi';
+    }
+    loadRates(); setInterval(loadRates,300000);
 
-    render(window._DATA);
-  }catch(err){
-    EL.err.textContent = 'Portföy yüklenemedi: '+err.message+' — CSV yayın linkini kontrol edin (Dosya → Web’de yayımla → CSV).';
-    EL.err.style.display='block';
-  }
-}
-['q','f_status','f_rooms','sort'].forEach(id=>document.getElementById(id).addEventListener('input',()=>render(window._DATA||[])));
-loadAndRender(); setInterval(loadAndRender, 120000);
+    /* CSV -> FUNCTION */
+    // Function endpoint: /.netlify/functions/portfolio  -> JSON döndürür
+    function normalizeHeader(h){
+      h=(h||'').trim().toLowerCase();
+      const map={
+        'başlık':'title','baslik':'title','title':'title',
+        'fiyat':'price','price':'price',
+        'semt':'district','district':'district',
+        'm2':'m2','metrekare':'m2',
+        'oda':'rooms','rooms':'rooms',
+        'durum':'status','status':'status',
+        'sahibinden link':'link','ilan linki':'link','link':'link',
+        'kapak fotograf':'image_url','kapak fotoğraf':'image_url','image_url':'image_url','görsel':'image_url','resim':'image_url',
+        'tarih':'updated_at','updated_at':'updated_at'
+      }; return map[h]||h;
+    }
 
-/* ====== Yorumlar ====== */
-const REVIEWS=[
-  {n:'Seda K.',t:'1 günde kiralık; süreç şeffaf ve çok profesyoneldi.',s:5},
-  {n:'Gökhan T.',t:'Doğru fiyat analiziyle 3 günde satış.',s:5},
-  {n:'Mehmet A.',t:'Çayyolu bölgesinde rakipsiz, kesinlikle tavsiye ederim.',s:5},
-  {n:'Ebru D.',t:'İlk görüşmeden tapuya kadar yanımızdaydı.',s:5},
-  {n:'Nur S.',t:'Kiralama 48 saatte tamamlandı.',s:5},
-  {n:'Tamer Y.',t:'İletişimi ve hızını çok beğendik.',s:5},
-  {n:'Selin B.',t:'Yatırım için en doğru seçenekleri sundu.',s:4},
-  {n:'Mert C.',t:'Fotoğraf ve ilan dili mükemmeldi.',s:5},
-  {n:'Gizem K.',t:'Süreç boyunca her adım bilgi verildi.',s:5},
-  {n:'Emre L.',t:'Bölgede ciddi portföy ağı var.',s:5},
-  {n:'Damla P.',t:'Kısa sürede kaliteli kiracı bulundu.',s:5},
-  {n:'Bora Z.',t:'Sonuç odaklı ve güven veriyor.',s:5}
-];
-function star(n){return '★★★★★'.slice(0,Math.max(0,Math.min(5,n)))}
-document.getElementById('twrap').innerHTML =
-  REVIEWS.map(r=>`<div class="tcard"><div class="thead"><b>${r.n}</b><span class="src">Google</span></div><div class="stars">${star(r.s)}</div><div>${r.t}</div></div>`).join('');
-</script>
+    function safeNum(x){
+      const s=String(x||'').replace(/[^\d]/g,''); return s?Number(s):0;
+    }
+
+    function imgOf(it){
+      return (it.image_url && it.image_url.startsWith('http')) ? it.image_url : 'assets/no-image.jpg';
+    }
+
+    function card(x){
+      const img=imgOf(x);
+      const href=(x.link&&x.link.startsWith('http'))?x.link:'#';
+      return `<a class="card" target="_blank" rel="noopener" href="${href}">
+        <img src="${img}" alt="${(x.title||'').replace(/"/g,'&quot;')}"
+             onerror="this.onerror=null;this.src='assets/no-image.jpg'">
+        <div class="pb">
+          <h3>${x.title||''}</h3>
+          <div class="meta">${x.district||''} • ${x.rooms||''} • ${x.m2||''} m²</div>
+          <div class="price">${x.price||''}</div>
+          <div class="small muted">Detaya gitmek için karta tıklayın</div>
+        </div>
+      </a>`;
+    }
+
+    function sortItems(arr, mode){
+      if(!mode) return arr;
+      const A=[...arr];
+      if(mode==='price_desc') return A.sort((a,b)=>safeNum(b.price)-safeNum(a.price));
+      if(mode==='price_asc')  return A.sort((a,b)=>safeNum(a.price)-safeNum(b.price));
+      if(mode==='m2_desc')    return A.sort((a,b)=>safeNum(b.m2)-safeNum(a.m2));
+      if(mode==='m2_asc')     return A.sort((a,b)=>safeNum(a.m2)-safeNum(b.m2));
+      return A;
+    }
+
+    function render(data){
+      const q=document.getElementById('q').value.toLowerCase(),
+            st=document.getElementById('f_status').value,
+            r=document.getElementById('f_rooms').value,
+            sort=document.getElementById('f_sort').value;
+
+      let items=data.filter(x=>
+        (!q||String(x.title||'').toLowerCase().includes(q)||String(x.district||'').toLowerCase().includes(q))
+        &&(!st||x.status===st)&&(!r||x.rooms===r)
+      );
+      items = sortItems(items, sort);
+
+      document.getElementById('cards').innerHTML = items.map(card).join('');
+      document.getElementById('empty').style.display = items.length?'none':'block';
+    }
+
+    async function loadAndRender(){
+      const e=document.getElementById('csvErr'); e.style.display='none';
+      try{
+        const res = await fetch('/.netlify/functions/portfolio', {cache:'no-store'});
+        if(!res.ok) throw new Error('HTTP '+res.status);
+        const data = await res.json(); window._DATA=data; render(data);
+      }catch(err){
+        e.textContent='Portföy yüklenemedi: '+err.message+' — CSV yayın linkini kontrol edin (Dosya → Web’de yayımla → CSV).';
+        e.style.display='block';
+      }
+    }
+    ['q','f_status','f_rooms','f_sort'].forEach(id=>document.getElementById(id).addEventListener('input',()=>render(window._DATA||[])));
+    loadAndRender(); setInterval(loadAndRender,120000);
+
+    /* YORUMLAR */
+    const REVIEWS=[
+      {n:'Seda K.',t:'1 günde kiralık; süreç şeffaf ve çok profesyoneldi.',s:5},
+      {n:'Gökhan T.',t:'Doğru fiyat analiziyle 3 günde satış.',s:5},
+      {n:'Mehmet A.',t:'Çayyolu bölgesinde rakipsiz, kesinlikle tavsiye ederim.',s:5},
+      {n:'Ebru D.',t:'İlk görüşmeden tapuya kadar yanımızdaydı.',s:5},
+      {n:'Nur S.',t:'Kiralama 48 saatte tamamlandı.',s:5},
+      {n:'Tamer Y.',t:'İletişimi ve hızını çok beğendik.',s:5},
+      {n:'Selin B.',t:'Yatırım için en doğru seçenekleri sundu.',s:4},
+      {n:'Mert C.',t:'Fotoğraf ve ilan dili mükemmeldi.',s:5},
+      {n:'Gizem K.',t:'Süreç boyunca her adım bilgi verildi.',s:5},
+      {n:'Emre L.',t:'Bölgede ciddi portföy ağı var.',s:5},
+      {n:'Damla P.',t:'Kısa sürede kaliteli kiracı bulundu.',s:5},
+      {n:'Bora Z.',t:'Sonuç odaklı ve güven veriyor.',s:5}
+    ];
+    function star(n){return '★★★★★'.slice(0,n)}
+    document.getElementById('twrap').innerHTML=
+      REVIEWS.map(r=>`<div class="tcard"><div class="thead"><b>${r.n}</b><span class="src">Google</span></div><div class="stars">${star(r.s)}</div><div>${r.t}</div></div>`).join('');
+  </script>
 </body>
 </html>
