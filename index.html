@@ -110,7 +110,11 @@
     .hero-banner img[hidden]+.overlay-fallback{display:grid}
 
     /* Generic sections */
-    .section{max-width:1200px; margin:0 auto; padding: clamp(18px,5vw,48px) 14px 24px}
+    .section{
+      max-width:1200px; margin:0 auto;
+      padding: clamp(18px,5vw,48px) 14px 24px;
+      scroll-margin-top: 72px; /* anchor tıklayınca topbar'a çarpmasın */
+    }
     h1{font-size:clamp(28px,5vw,40px); margin:0 0 8px}
     h2{font-size:clamp(22px,4vw,32px); margin:10px 0 14px}
     .muted{color:var(--muted)}
@@ -215,6 +219,25 @@
 
     /* Hata/Boş */
     .err{color:#ef4444; background:#ef444422; padding:10px 12px; border-radius:10px}
+
+    /* ====== MOBİL DÜZENLEME: Giriş (intro) kayma fix ====== */
+    @media (max-width: 720px){
+      .intro-grid{
+        grid-template-columns: 1fr;   /* tek kolon */
+        gap: 16px;
+      }
+      .intro-photo img{
+        max-width: 82%;
+        margin: 0 auto;               /* ortala */
+        display: block;
+      }
+      .intro-copy h1{
+        font-size: 24px;
+        text-align: center;
+      }
+      .intro-copy .bullets{ padding-left: 20px; }
+      .socials{ justify-content: center; }
+    }
   </style>
 </head>
 <body>
